@@ -80,9 +80,14 @@ Column {
             display: Math.round(SysStats.disk * 100) + "%"
         }
         Bar {
-            label: "temp"
+            label: "cpu°"
             value: SysStats.temp / 100
             display: Math.round(SysStats.temp) + "°"
+        }
+        Bar {
+            label: "gpu°"
+            value: SysStats.gpuOff ? 0 : SysStats.gpuTemp / 100
+            display: SysStats.gpuOff ? "off" : Math.round(SysStats.gpuTemp) + "°"
         }
     }
 

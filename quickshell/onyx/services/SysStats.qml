@@ -20,7 +20,8 @@ Singleton {
     property real gpu: 0          // 0..1
     property bool gpuOff: true    // dGPU asleep (RTD3) or no GPU source
     property real disk: 0         // 0..1 of /
-    property real temp: 0         // °C
+    property real temp: 0         // °C (cpu package)
+    property real gpuTemp: 0      // °C (dGPU; 0 while asleep)
     property real netRx: 0        // B/s
     property real netTx: 0        // B/s
 
@@ -65,6 +66,7 @@ Singleton {
             } else {
                 gpuOff = true;
                 gpu = 0;
+                gpuTemp = 0;
             }
         }
     }
@@ -198,14 +200,16 @@ Singleton {
 
     Process {
         id: nvidia
-        command: ["nvidia-smi", "--query-gpu=utilization.gpu", "--format=csv,noheader,nounits"]
+        command: ["nvidia-smi", "--query-gpu=utilization.gpu,temperature.gpu", "--format=csv,noheader,nounits"]
         stdout: StdioCollector {
             onStreamFinished: {
-                const v = parseInt(text);
-                if (!isNaN(v)) {
-                    root.gpu = v / 100;
+                const f = text.split(",").map(x => parseInt(x));
+                if (!isNaN(f[0])) {
+                    root.gpu = f[0] / 100;
                     root.gpuOff = false;
                 }
+                if (!isNaN(f[1]))
+                    root.gpuTemp = f[1];
             }
         }
     }
