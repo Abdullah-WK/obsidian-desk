@@ -66,6 +66,12 @@ backup "$CAE/templates/fzf.fish"; install -m644 "$HERE/terminal/fzf.fish" "$CAE/
 backup "$CAE/templates/starship.toml"; install -m644 "$HERE/terminal/starship.toml" "$CAE/templates/starship.toml"
 backup "$CAE/user-config.fish"; install -m644 "$HERE/terminal/user-config.fish" "$CAE/user-config.fish"; ok "terminal: fzf/starship templates + user-config.fish"
 bash "$HERE/terminal/foot-apply.sh" >/dev/null && ok "foot.ini: opaque, pointer hides while typing"
+python3 "$HERE/terminal/arch-logo.py" >/dev/null 2>&1 && ok "fastfetch: iridescent Arch logo file" || warn "fastfetch logo not generated"
+if [ -f "$CFG/fastfetch/config.jsonc" ] && ! grep -q arch-iridescent "$CFG/fastfetch/config.jsonc"; then backup "$CFG/fastfetch/config.jsonc"; python3 - "$CFG/fastfetch/config.jsonc" <<'PY'
+import re,sys; p=sys.argv[1]; s=open(p).read()
+s=re.sub(r'"logo": \{[^\n]*\},', '"logo": {"source": "~/.config/fastfetch/arch-iridescent.txt", "type": "file-raw", "padding": {"left": 3, "right": 3}},', s, count=1); open(p,"w").write(s)
+PY
+ok "fastfetch config → iridescent logo"; fi
 if [ -e "$CAE/templates/thunar-graphite.css" ]; then
     backup "$CAE/templates/thunar-graphite.css"; rm -f "$CAE/templates/thunar-graphite.css" "$STATE/caelestia/theme/thunar-graphite.css"
     note "removed the older thunar-graphite.css template (superseded; copy in backup)"
