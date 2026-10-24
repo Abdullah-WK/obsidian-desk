@@ -27,5 +27,5 @@ return {
     inactiveWindowBorderColour = "rgba(" .. scheme.surfaceContainerHigh .. "ff)",
 
     -- Caelestia's own lock keeps a key, but moves off Super+L once the companion lock owns it
-    kbLock                     = lockVerified and "SUPER + ALT + L" or "SUPER + L",
+    kbLock                     = lockVerified and "SUPER + CTRL + L" or "SUPER + L",
 }

@@ -48,7 +48,7 @@ the companion lock with a 30 s debug auto-unlock (`lockDebugAutoUnlockSec` in
    Repeat three times, on every monitor. (`qs -p ~/.config/quickshell/onyx/LockHarness.qml`
    shows the same surface in a plain window with real PAM for visual checks.)
 3. `./enable-lock.sh` → auto-unlock off, idle action → companion lock, Super+L → companion lock
-   (Caelestia's lock moves to Super+Alt+L), login lock → companion lock. `./enable-lock.sh --undo` reverts.
+   (Caelestia's lock moves to Super+Ctrl+L; Super+Alt+L stays the dots' restore-lock), login lock → companion lock. `./enable-lock.sh --undo` reverts.
 
 ## Daily use
 

@@ -16,5 +16,5 @@ PY
 ok "lockDebugAutoUnlockSec = 0"
 merge_json "$CAE/shell.json" "$HERE/caelestia/shell.json" "$(idle_lock_post)"
 ok "shell.json idle lock → qs -c onyx ipc call lock lock"
-hyprctl reload >/dev/null 2>&1 && ok "hyprctl reload: Super+L → companion lock, Super+Alt+L → Caelestia lock, login lock → companion"
+hyprctl reload >/dev/null 2>&1 && ok "hyprctl reload: Super+L → companion lock, Super+Ctrl+L → Caelestia lock, login lock → companion"
 note "Caelestia's lock stays installed (lockBeforeSleep fallback)."
