@@ -28,12 +28,15 @@ Singleton {
     readonly property int rFrame: 12
 
     // Bar geometry (§6.2)
-    readonly property int barHeight: 32
+    // one step up from the spec's 32/24/15 so the bar reads easily; popouts keep their sizes
+    readonly property int barHeight: 36
     readonly property int barPadding: 10
-    readonly property int itemHeight: 24
-    readonly property int itemPadding: 7
+    readonly property int itemHeight: 28
+    readonly property int itemPadding: 8
     readonly property int itemGap: 2
-    readonly property int iconSize: 15
+    readonly property int iconSize: 17
+    readonly property real barText: 12.5
+    readonly property real barLabel: 12
     readonly property int popoutGap: 9
     readonly property int popoutMinWidth: 220
     readonly property int popoutPadding: 12

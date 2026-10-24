@@ -19,13 +19,13 @@ BarItem {
 
     Ink {
         text: root.appClass + (root.title ? " · " : "")
-        size: 11
+        size: Theme.barText
         color: Scheme.fgSurfaceVariant
         anchors.verticalCenter: parent.verticalCenter
     }
     Ink {
         text: root.title
-        size: 11
+        size: Theme.barText
         font.weight: 500
         color: Scheme.fgSurface
         elide: Text.ElideMiddle

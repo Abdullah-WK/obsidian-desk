@@ -1,6 +1,6 @@
 {
   "reducedMotion": false,
-  "barPinned": false,
+  "barPinned": true,
   "updatesIntervalMin": 30,
   "widgetsEnabled": true,
   "widgets": {

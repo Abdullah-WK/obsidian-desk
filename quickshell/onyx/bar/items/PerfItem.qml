@@ -32,7 +32,7 @@ BarItem {
 
         Rectangle {
             width: 3
-            height: 10
+            height: 12
             radius: 1
             color: Scheme.outlineVariant
             anchors.verticalCenter: parent.verticalCenter
@@ -48,7 +48,7 @@ BarItem {
         Ink {
             mono: true
             text: parent.label
-            size: 10.5
+            size: Theme.barLabel
             color: root.ink
         }
     }

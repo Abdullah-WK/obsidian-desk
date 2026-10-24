@@ -35,7 +35,7 @@ BarItem {
 
     Row {
         id: squares
-        spacing: 5
+        spacing: 6
         anchors.verticalCenter: parent.verticalCenter
 
         Repeater {
@@ -50,8 +50,8 @@ BarItem {
                 readonly property bool active: root.activeId === wsId
                 readonly property bool occupied: ws ? (ws.lastIpcObject?.windows ?? 0) > 0 : false
 
-                width: active ? 14 : 7
-                height: 7
+                width: active ? 16 : 8
+                height: 8
                 radius: 2
                 color: active ? Scheme.primary : occupied ? Scheme.fgSurfaceVariant : Scheme.outlineVariant
 

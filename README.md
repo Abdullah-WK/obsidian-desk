@@ -54,7 +54,7 @@ the companion lock with a 30 s debug auto-unlock (`lockDebugAutoUnlockSec` in
 
 | | |
 |---|---|
-| Top bar | move the cursor to the top edge; hover an item for its popout |
+| Top bar | permanent by default (`barPinned`, reserves its 36 px); with `barPinned: false` it hides above the edge and the top edge reveals it; hover an item for its popout |
 | Pin the bar | Super+Shift+B or `qs -c onyx ipc call bar pin\|unpin\|toggle`; Esc unpins; Tab/Enter work while pinned |
 | Lock | `qs -c onyx ipc call lock lock`; global shortcut `onyx:lock` |
 | Caelestia | dashboard/launcher/sidebar on their keybinds; its own bar (`bar.excludedScreens`) , the right-edge OSD (`osd.enabled: false`) and the sidebar hover (`sidebar.showOnHover: false`) are off, the tray lives in the top bar |

@@ -23,7 +23,9 @@ PanelWindow {
     }
     implicitWidth: 300
     implicitHeight: Math.max(1, column.implicitHeight)
-    exclusionMode: ExclusionMode.Ignore
+    // reserve nothing, but respect other layers' zones (the pinned bar, Caelestia's frame)
+    exclusionMode: ExclusionMode.Normal
+    exclusiveZone: 0
     color: "transparent"
     visible: shown
     WlrLayershell.layer: WlrLayer.Bottom

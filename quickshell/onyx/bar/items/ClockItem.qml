@@ -22,7 +22,7 @@ BarItem {
     Ink {
         mono: true
         text: Qt.formatTime(clock.date, "HH:mm")
-        size: 11.5
+        size: 13
         font.weight: 500
         tracking: 0.02
         color: root.ink

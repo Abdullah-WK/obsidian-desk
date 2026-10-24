@@ -16,7 +16,7 @@ BarItem {
     onActivated: Quickshell.execDetached(["caelestia", "shell", "drawers", "toggle", "launcher"])
 
     ArchGlyph {
-        size: 14
+        size: 16
         anchors.verticalCenter: parent.verticalCenter
     }
 }

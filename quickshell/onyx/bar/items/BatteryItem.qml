@@ -36,7 +36,7 @@ BarItem {
     Ink {
         mono: true
         text: Math.round(root.pct * 100)
-        size: 10.5
+        size: Theme.barLabel
         color: root.ink
         anchors.verticalCenter: parent.verticalCenter
     }

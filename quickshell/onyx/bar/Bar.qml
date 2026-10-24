@@ -87,7 +87,9 @@ Scope {
             right: true
         }
         implicitHeight: Theme.barHeight + Theme.popoutSpace
-        exclusionMode: ExclusionMode.Ignore
+        // pinned: reserve the strip so windows tile below it; hidden: no reserved space
+        exclusionMode: ExclusionMode.Normal
+        exclusiveZone: root.pinned && !root.gameMode ? Theme.barHeight : 0
         color: "transparent"
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "onyx-bar"
