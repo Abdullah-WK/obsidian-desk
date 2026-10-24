@@ -305,9 +305,10 @@ FocusScope {
                 Row {
                     spacing: root.px(7)
                     Repeater {
-                        model: ["#1d1d21", "#2a2a2f", "#3a3a40", "#5c5c63", "#a1a1a8", "#e4e4e7", "#8fb8d8"]
+                        // the scheme's own ramp, so the row follows a dynamic wallpaper scheme
+                        model: [Scheme.surfaceContainerHigh, Scheme.outlineVariant, Scheme.primaryContainer, Scheme.outline, Scheme.fgSurfaceVariant, Scheme.primary, Scheme.archIce]
                         Rectangle {
-                            required property string modelData
+                            required property color modelData
                             width: root.px(16)
                             height: root.px(16)
                             radius: 3

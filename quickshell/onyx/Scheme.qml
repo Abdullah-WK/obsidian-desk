@@ -36,6 +36,8 @@ Singleton {
         })
 
     property var colours: ({})
+    property string name: ""       // scheme name from scheme.json ("onyx", "dynamic", …)
+    readonly property bool onyx: name === "" || name === "onyx"
 
     function c(name: string): color {
         const v = colours[name];
@@ -64,7 +66,8 @@ Singleton {
     readonly property color error: c("error")
     readonly property color fgError: c("onError")
     readonly property color success: c("success")
-    readonly property color archIce: "#8fb8d8"
+    // the one chromatic token of the Obsidian scheme; under any other scheme it follows primary
+    readonly property color archIce: onyx ? "#8fb8d8" : primary
 
     function alpha(col: color, a: real): color {
         return Qt.rgba(col.r, col.g, col.b, a);
@@ -80,6 +83,7 @@ Singleton {
             try {
                 const json = JSON.parse(text());
                 root.colours = json.colours ?? ({});
+                root.name = json.name ?? "";
             } catch (e) {
                 console.warn("onyx: scheme.json unparsable, using fallback colours");
                 root.colours = ({});
