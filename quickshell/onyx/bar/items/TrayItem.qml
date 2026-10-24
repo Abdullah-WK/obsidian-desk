@@ -42,11 +42,14 @@ BarItem {
                 }
             }
 
-            IconImage {
+            Loader {
                 anchors.centerIn: parent
-                implicitSize: Theme.iconSize
-                source: entry.modelData.icon
-                opacity: hh.hovered ? 1 : 0.85
+                active: entry.modelData.icon !== ""
+                sourceComponent: IconImage {
+                    implicitSize: Theme.iconSize
+                    source: entry.modelData.icon
+                    opacity: hh.hovered ? 1 : 0.85
+                }
             }
 
             QsMenuAnchor {
