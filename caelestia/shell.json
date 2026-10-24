@@ -236,5 +236,8 @@
       "vpnChanged": false,
       "nowPlaying": false
     }
+  },
+  "sidebar": {
+    "enabled": false
   }
 }

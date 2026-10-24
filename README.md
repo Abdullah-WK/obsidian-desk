@@ -57,7 +57,7 @@ the companion lock with a 30 s debug auto-unlock (`lockDebugAutoUnlockSec` in
 | Top bar | move the cursor to the top edge; hover an item for its popout |
 | Pin the bar | Super+Shift+B or `qs -c onyx ipc call bar pin\|unpin\|toggle`; Esc unpins; Tab/Enter work while pinned |
 | Lock | `qs -c onyx ipc call lock lock`; global shortcut `onyx:lock` |
-| Caelestia | dashboard/launcher/sidebar on their keybinds; its own bar is disabled (`bar.excludedScreens`), the tray lives in the top bar |
+| Caelestia | dashboard/launcher/sidebar on their keybinds; its own bar (`bar.excludedScreens`) and right-edge sidebar (`sidebar.enabled: false`) are off, the tray lives in the top bar |
 | Settings | `~/.config/onyx/config.json` (watched): `reducedMotion`, `barPinned`, `updatesIntervalMin`, `widgetsEnabled`, `widgets.*`, `perfCommand`, `updatesCommand`, `logoutCommand`, `trayHidden`, `lock.{hideNotifs,use24h,showWeather,showMedia,dotField}` |
 
 Colours follow `~/.local/state/caelestia/scheme.json`, so `caelestia scheme set …` recolours the
