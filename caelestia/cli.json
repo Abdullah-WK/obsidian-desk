@@ -1,0 +1,7 @@
+{
+  "theme": {
+    "enableGtk": false,
+    "iconTheme": "Papirus-Dark",
+    "postHook": "~/.config/caelestia/hooks/post-scheme.sh"
+  }
+}

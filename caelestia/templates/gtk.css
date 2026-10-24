@@ -1,0 +1,243 @@
+/* Obsidian GTK stylesheet.
+   Caelestia user template: rendered by `caelestia scheme set` from
+   ~/.config/caelestia/templates/gtk.css to ~/.local/state/caelestia/theme/gtk.css.
+   ~/.config/gtk-3.0/gtk.css and ~/.config/gtk-4.0/gtk.css are symlinks to the rendered file.
+   Base theme: adw-gtk3-dark. Only the colour defines are global; every rule below is
+   scoped to Thunar (window.thunar / .thunar) so dialogs and the file chooser inherit. */
+
+@define-color accent_color #{{ primary.hex }};
+@define-color accent_fg_color #{{ onPrimary.hex }};
+@define-color accent_bg_color #{{ primary.hex }};
+@define-color window_bg_color #{{ background.hex }};
+@define-color window_fg_color #{{ onBackground.hex }};
+@define-color headerbar_bg_color #{{ surfaceDim.hex }};
+@define-color headerbar_fg_color #{{ onSurface.hex }};
+@define-color popover_bg_color #{{ surfaceContainerLow.hex }};
+@define-color popover_fg_color #{{ onSurface.hex }};
+@define-color view_bg_color #{{ surfaceContainerLowest.hex }};
+@define-color view_fg_color #{{ onSurface.hex }};
+@define-color card_bg_color #{{ surfaceContainerLow.hex }};
+@define-color card_fg_color #{{ onSurface.hex }};
+@define-color sidebar_bg_color @window_bg_color;
+@define-color sidebar_fg_color @window_fg_color;
+@define-color sidebar_border_color #{{ outlineVariant.hex }};
+@define-color sidebar_backdrop_color @window_bg_color;
+@define-color theme_selected_bg_color alpha(@accent_color, 0.15);
+@define-color theme_selected_fg_color @accent_color;
+
+/* ---- Thunar: window ------------------------------------------------------ */
+window.thunar, .thunar.background {
+    background-color: #{{ background.hex }};
+    color: #{{ onSurface.hex }};
+}
+.thunar * { outline: none; }
+.thunar paned > separator {
+    min-width: 1px;
+    background-color: #{{ outlineVariant.hex }};
+    background-image: none;
+    box-shadow: none;
+}
+
+/* ---- Thunar: header (toolbar / headerbar), 42 px, flat, no title --------- */
+.thunar headerbar, .thunar toolbar, .thunar .titlebar {
+    min-height: 42px;
+    padding: 0 12px;
+    margin: 0;
+    background-color: #{{ surfaceDim.hex }};
+    background-image: none;
+    border: none;
+    border-bottom: 1px solid #{{ outlineVariant.hex }};
+    box-shadow: none;
+}
+.thunar headerbar .title, .thunar headerbar .subtitle { font-size: 0; color: transparent; }
+.thunar headerbar button, .thunar toolbar button {
+    min-width: 28px;
+    min-height: 28px;
+    padding: 4px;
+    margin: 0 1px;
+    border: none;
+    border-radius: 3px;
+    background: none;
+    box-shadow: none;
+    color: #{{ onSurfaceVariant.hex }};
+    -gtk-icon-shadow: none;
+}
+.thunar headerbar button:hover, .thunar toolbar button:hover {
+    background-color: #{{ surfaceContainer.hex }};
+    color: #{{ onSurface.hex }};
+}
+.thunar headerbar button:active, .thunar headerbar button:checked,
+.thunar toolbar button:active, .thunar toolbar button:checked {
+    background-color: #{{ surfaceContainerHigh.hex }};
+    color: #{{ onSurface.hex }};
+}
+.thunar headerbar button:disabled, .thunar toolbar button:disabled { color: #{{ outline.hex }}; }
+
+/* path field: entry or path-bar buttons, 28 px, radius 5, mono */
+.thunar toolbar entry, .thunar headerbar entry, .thunar .location-bar entry,
+.thunar .path-bar, .thunar .location-bar .path-bar-button,
+.thunar .path-bar-button, .thunar .location-button {
+    min-height: 28px;
+    padding: 0 10px;
+    border: 1px solid #{{ outlineVariant.hex }};
+    border-radius: 5px;
+    background-color: #{{ surfaceContainerLow.hex }};
+    background-image: none;
+    box-shadow: none;
+    color: #{{ onSurfaceVariant.hex }};
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 11.5px;
+    caret-color: #{{ onSurface.hex }};
+}
+.thunar toolbar entry:focus, .thunar headerbar entry:focus, .thunar .location-bar entry:focus {
+    border-color: #{{ outline.hex }};
+    color: #{{ onSurface.hex }};
+}
+.thunar toolbar entry selection, .thunar .location-bar entry selection {
+    background-color: alpha(#{{ primary.hex }}, 0.25);
+    color: #{{ onSurface.hex }};
+}
+.thunar .path-bar-button { border-radius: 0; border-right-width: 0; }
+.thunar .path-bar-button:first-child { border-radius: 5px 0 0 5px; }
+.thunar .path-bar-button:last-child { border-radius: 0 5px 5px 0; border-right-width: 1px; }
+.thunar .path-bar-button:hover { color: #{{ onSurface.hex }}; background-color: #{{ surfaceContainer.hex }}; }
+.thunar .path-bar-button:checked, .thunar .location-button:checked {
+    color: #{{ onSurface.hex }};
+    font-weight: 500;
+    background-color: #{{ surfaceContainerLow.hex }};
+}
+
+/* ---- Thunar: sidebar, 200 px, 30 px rows, selected = surfaceContainer, no accent */
+.thunar .sidebar {
+    min-width: 200px;
+    padding: 8px 8px;
+    background-color: #{{ background.hex }};
+    border: none;
+    animation: none;
+    opacity: 1;
+}
+.thunar .sidebar .view, .thunar .sidebar treeview.view {
+    background-color: transparent;
+    color: #{{ onSurfaceVariant.hex }};
+    font-family: "Inter", sans-serif;
+    font-size: 12.5px;
+    padding: 0;
+    border-radius: 3px;
+    transition: none;
+    -GtkTreeView-vertical-separator: 8;
+}
+.thunar .sidebar .view:hover { background-color: #{{ surfaceContainerLow.hex }}; color: #{{ onSurface.hex }}; }
+.thunar .sidebar .view:selected, .thunar .sidebar treeview.view:selected {
+    background-color: #{{ surfaceContainer.hex }};
+    color: #{{ onSurface.hex }};
+    box-shadow: none;
+}
+/* group headers are tree rows Thunar draws itself: keep them outline-grey, small, spaced */
+.thunar .sidebar treeview.view header, .thunar .sidebar .view header button {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #{{ outline.hex }};
+}
+
+/* ---- Thunar: file view (details), 30 px rows ---------------------------- */
+.thunar .frame.standard-view {
+    padding: 8px 10px;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background-color: #{{ surfaceContainerLowest.hex }};
+    animation: none;
+    opacity: 1;
+}
+.thunar .frame.standard-view .view, .thunar .frame.standard-view treeview.view {
+    background-color: transparent;
+    color: #{{ onSurface.hex }};
+    font-family: "Inter", sans-serif;
+    font-size: 12.5px;
+    -GtkTreeView-vertical-separator: 8;
+    -GtkTreeView-horizontal-separator: 10;
+}
+.thunar .frame.standard-view treeview.view:hover,
+.thunar .frame.standard-view .view:hover {
+    background-color: #{{ surfaceContainerLow.hex }};
+}
+.thunar .frame.standard-view .view *:selected,
+.thunar .frame.standard-view .view:selected,
+.thunar .frame.standard-view treeview.view:selected,
+.thunar .frame.standard-view treeview.view:selected:focus,
+.thunar .frame.standard-view treeview.view:selected:hover {
+    background-color: #{{ surfaceContainer.hex }};
+    color: #{{ onSurface.hex }};
+    box-shadow: inset 2px 0 0 #{{ primary.hex }};
+    border-radius: 3px;
+}
+.thunar .frame.standard-view treeview.view header button {
+    padding: 6px 10px;
+    min-height: 24px;
+    border: none;
+    border-bottom: 1px solid #{{ outlineVariant.hex }};
+    background: none;
+    box-shadow: none;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #{{ outline.hex }};
+}
+.thunar .frame.standard-view treeview.view header button:hover { color: #{{ onSurfaceVariant.hex }}; }
+.thunar .rubberband {
+    border-radius: 0;
+    background-color: alpha(#{{ primary.hex }}, 0.10);
+    border: 1px solid alpha(#{{ primary.hex }}, 0.4);
+}
+/* tabs (only visible with a second tab) */
+.thunar header.top { background: none; padding: 0; margin: 0; border-bottom: 1px solid #{{ outlineVariant.hex }}; }
+.thunar header.top tabs .reorderable-page, .thunar notebook > header tab {
+    min-height: 28px;
+    padding: 0 12px;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    color: #{{ onSurfaceVariant.hex }};
+    font-size: 12px;
+    transition: none;
+}
+.thunar header.top tabs .reorderable-page:checked, .thunar notebook > header tab:checked {
+    color: #{{ onSurface.hex }};
+    background-color: #{{ surfaceContainerLow.hex }};
+    box-shadow: inset 0 -2px 0 #{{ primary.hex }};
+}
+
+/* ---- Thunar: status bar, 24 px mono ------------------------------------ */
+.thunar statusbar {
+    min-height: 24px;
+    padding: 0 12px;
+    margin: 0;
+    border: none;
+    border-top: 1px solid #{{ outlineVariant.hex }};
+    border-radius: 0;
+    background-color: #{{ background.hex }};
+    color: #{{ outline.hex }};
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 10.5px;
+}
+
+/* ---- Thunar: overlay scrollbar, 4 px, no buttons ------------------------ */
+.thunar scrollbar, .thunar scrollbar.overlay-indicator {
+    background: none;
+    border: none;
+    padding: 0;
+}
+.thunar scrollbar slider {
+    min-width: 4px;
+    min-height: 4px;
+    margin: 2px;
+    border: none;
+    border-radius: 2px;
+    background-color: #{{ outlineVariant.hex }};
+}
+.thunar scrollbar slider:hover { background-color: #{{ outline.hex }}; }
+.thunar scrollbar button { min-width: 0; min-height: 0; padding: 0; margin: 0; background: none; -gtk-icon-source: none; }

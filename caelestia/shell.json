@@ -1,0 +1,91 @@
+{
+  "appearance": {
+    "rounding": { "scale": 0.5 },
+    "spacing": { "scale": 0.85 },
+    "padding": { "scale": 0.85 },
+    "anim": { "durations": { "scale": 0.7 } },
+    "transparency": { "enabled": false },
+    "font": {
+      "clock": "JetBrainsMono Nerd Font",
+      "workspaces": "Inter",
+      "headline": { "family": "Inter" },
+      "title": { "family": "Inter" },
+      "body": { "family": "Inter" },
+      "label": { "family": "Inter" },
+      "mono": { "family": "JetBrainsMono Nerd Font" }
+    }
+  },
+  "general": {
+    "showOverFullscreen": false,
+    "apps": { "terminal": ["foot"], "explorer": ["thunar"] },
+    "idle": {
+      "lockBeforeSleep": true,
+      "inhibitWhenAudio": true,
+      "timeouts": [
+        { "timeout": 300, "idleAction": ["qs", "-c", "onyx", "ipc", "call", "lock", "lock"] },
+        { "timeout": 420, "idleAction": "dpms off", "returnAction": "dpms on" },
+        { "timeout": 1200, "idleAction": ["suspendThenHibernate"] }
+      ]
+    }
+  },
+  "background": {
+    "enabled": true,
+    "wallpaperEnabled": true,
+    "desktopClock": { "enabled": false },
+    "visualiser": { "enabled": false }
+  },
+  "bar": {
+    "persistent": false,
+    "showOnHover": true,
+    "popouts": { "activeWindow": false, "tray": true, "statusIcons": true },
+    "workspaces": {
+      "shown": 5, "activeIndicator": true, "occupiedBg": false, "showWindows": false,
+      "activeTrail": false, "displayType": "shapes"
+    },
+    "activeWindow": { "compact": true, "showOnHover": false },
+    "tray": { "compact": true, "recolour": true, "background": false },
+    "clock": { "showDate": false, "showIcon": false, "background": false },
+    "statusIcons": [
+      { "id": "lockStatus", "enabled": false },
+      { "id": "audio", "enabled": false },
+      { "id": "microphone", "enabled": false },
+      { "id": "kbLayout", "enabled": false },
+      { "id": "network", "enabled": true },
+      { "id": "bluetooth", "enabled": false },
+      { "id": "battery", "enabled": true }
+    ],
+    "entries": [
+      { "id": "logo", "enabled": false },
+      { "id": "workspaces", "enabled": true },
+      { "id": "spacer", "enabled": true },
+      { "id": "activeWindow", "enabled": true },
+      { "id": "spacer", "enabled": true },
+      { "id": "tray", "enabled": true },
+      { "id": "clock", "enabled": true },
+      { "id": "statusIcons", "enabled": true },
+      { "id": "power", "enabled": false }
+    ]
+  },
+  "border": { "thickness": 4, "rounding": 12, "smoothing": 20 },
+  "dashboard": {
+    "enabled": true,
+    "showOnHover": false,
+    "showWeather": false,
+    "mediaUpdateInterval": 1000,
+    "resourceUpdateInterval": 2000
+  },
+  "launcher": { "maxShown": 7, "vimKeybinds": false },
+  "lock": { "useWallpaper": false, "hideNotifs": true },
+  "notifs": { "defaultExpireTimeout": 5000 },
+  "osd": { "hideDelay": 1500, "enableMicrophone": false },
+  "services": { "smartScheme": false, "weatherLocation": "" },
+  "utilities": {
+    "maxToasts": 3,
+    "toasts": {
+      "configLoaded": true, "chargingChanged": true, "gameModeChanged": true, "dndChanged": true,
+      "audioOutputChanged": true, "audioInputChanged": false, "capsLockChanged": false,
+      "numLockChanged": false, "kbLayoutChanged": false, "kbLimit": true, "vpnChanged": false,
+      "nowPlaying": false
+    }
+  }
+}
