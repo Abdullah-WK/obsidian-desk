@@ -31,7 +31,7 @@
         {
             "type": "kernel",
             "key": "│ {$2}{$1}  kernel",
-            "format": "{$2}{release>22}{$1}                   │"
+            "format": "{$2}{release>22}{$1} │"
         },
         {
             "type": "command",
@@ -102,7 +102,7 @@
         },
         {
             "type": "custom",
-            "key": "│   \u001b[38;2;{{ surfaceContainerHigh.red }};{{ surfaceContainerHigh.green }};{{ surfaceContainerHigh.blue }}m■ \u001b[38;2;{{ outlineVariant.red }};{{ outlineVariant.green }};{{ outlineVariant.blue }}m■ \u001b[38;2;{{ primaryContainer.red }};{{ primaryContainer.green }};{{ primaryContainer.blue }}m■ \u001b[38;2;{{ outline.red }};{{ outline.green }};{{ outline.blue }}m■ \u001b[38;2;{{ onSurfaceVariant.red }};{{ onSurfaceVariant.green }};{{ onSurfaceVariant.blue }}m■ \u001b[38;2;{{ primary.red }};{{ primary.green }};{{ primary.blue }}m■ \u001b[38;2;{{ tertiary.red }};{{ tertiary.green }};{{ tertiary.blue }}m■{$1}                  │"
+            "key": "│   \u001b[38;2;{{ surfaceContainerHigh.red }};{{ surfaceContainerHigh.green }};{{ surfaceContainerHigh.blue }}m■ \u001b[38;2;{{ outlineVariant.red }};{{ outlineVariant.green }};{{ outlineVariant.blue }}m■ \u001b[38;2;{{ primaryContainer.red }};{{ primaryContainer.green }};{{ primaryContainer.blue }}m■ \u001b[38;2;{{ outline.red }};{{ outline.green }};{{ outline.blue }}m■ \u001b[38;2;{{ onSurfaceVariant.red }};{{ onSurfaceVariant.green }};{{ onSurfaceVariant.blue }}m■ \u001b[38;2;{{ primary.red }};{{ primary.green }};{{ primary.blue }}m■ \u001b[38;2;{{ tertiary.red }};{{ tertiary.green }};{{ tertiary.blue }}m■{$1}                   │"
         },
         {
             "type": "custom",
