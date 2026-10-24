@@ -62,6 +62,10 @@ step "4 gtk template and post-scheme hook"
 mkdir -p "$CAE/templates" "$CAE/hooks"
 backup "$CAE/templates/gtk.css"; install -m644 "$HERE/caelestia/templates/gtk.css" "$CAE/templates/gtk.css"; ok "templates/gtk.css"
 backup "$CAE/hooks/post-scheme.sh"; install -m755 "$HERE/caelestia/hooks/post-scheme.sh" "$CAE/hooks/post-scheme.sh"; ok "hooks/post-scheme.sh"
+for t in fastfetch.jsonc fzf.fish; do backup "$CAE/templates/$t"; install -m644 "$HERE/terminal/$t" "$CAE/templates/$t"; done
+backup "$CAE/templates/starship.toml"; install -m644 "$HERE/terminal/starship.toml" "$CAE/templates/starship.toml"
+backup "$CAE/user-config.fish"; install -m644 "$HERE/terminal/user-config.fish" "$CAE/user-config.fish"; ok "terminal: fastfetch/fzf/starship templates + user-config.fish"
+bash "$HERE/terminal/foot-apply.sh" >/dev/null && ok "foot.ini: pad 14, opaque, pointer hides while typing, Ctrl+Shift+U urls"
 if [ -e "$CAE/templates/thunar-graphite.css" ]; then
     backup "$CAE/templates/thunar-graphite.css"; rm -f "$CAE/templates/thunar-graphite.css" "$STATE/caelestia/theme/thunar-graphite.css"
     note "removed the older thunar-graphite.css template (superseded; copy in backup)"

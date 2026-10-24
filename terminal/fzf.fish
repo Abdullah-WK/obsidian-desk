@@ -1,0 +1,4 @@
+# fzf colours from the Caelestia scheme (user template → ~/.local/state/caelestia/theme/fzf.fish)
+set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border=rounded --margin=0,1 --prompt='› ' --pointer='›' --marker='+' --info=inline-right --color=fg:#{{ onSurfaceVariant.hex }},bg:-1,hl:#{{ primary.hex }},fg+:#{{ onSurface.hex }},bg+:#{{ surfaceContainer.hex }},hl+:#{{ primary.hex }},info:#{{ outline.hex }},prompt:#{{ primary.hex }},pointer:#{{ primary.hex }},marker:#{{ tertiary.hex }},spinner:#{{ outline.hex }},header:#{{ outline.hex }},border:#{{ outlineVariant.hex }},gutter:-1"
+set -gx FZF_CTRL_T_OPTS "--preview 'bat --color=always --style=numbers --line-range=:200 {} 2>/dev/null || eza --icons -1 --color=always {}' --preview-window=right,55%,border-left"
+set -gx FZF_ALT_C_OPTS "--preview 'eza --icons -1 --color=always --group-directories-first {}' --preview-window=right,45%,border-left"

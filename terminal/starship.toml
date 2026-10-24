@@ -1,0 +1,87 @@
+# Graphite starship prompt (spec: "user@host path  branch › "), rendered by `caelestia scheme`.
+# Selected via STARSHIP_CONFIG in ~/.config/caelestia/user-config.fish, so the Caelestia dots'
+# own ~/.config/starship.toml stays untouched. Named colours follow the terminal palette, which
+# the scheme already sets; the two fixed hexes are re-rendered on every scheme change.
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+continuation_prompt = "[› ](#{{ outline.hex }})"
+
+format = "$username$hostname$directory$git_branch$git_status$python$nodejs$status$character"
+right_format = "$cmd_duration$time"
+
+[username]
+show_always = true
+format = "[$user]($style)"
+style_user = "green"
+style_root = "red"
+
+[hostname]
+ssh_only = false
+format = "[@$hostname]($style) "
+style = "#{{ outline.hex }}"
+trim_at = "."
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "blue"
+read_only = " "
+read_only_style = "red"
+truncation_length = 3
+truncate_to_repo = true
+home_symbol = "~"
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "yellow"
+only_attached = false
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+style = "#{{ outline.hex }}"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+modified = "*"
+staged = "+"
+untracked = "?"
+stashed = "≡"
+conflicted = "!"
+
+[character]
+format = "$symbol "
+success_symbol = "[›](bold #{{ primary.hex }})"
+error_symbol = "[›](bold red)"
+vimcmd_symbol = "[‹](bold #{{ primary.hex }})"
+
+[status]
+disabled = false
+format = "[$symbol$status]($style) "
+symbol = "✗ "
+style = "red"
+
+[cmd_duration]
+min_time = 2000
+format = "[$duration]($style) "
+style = "#{{ outline.hex }}"
+
+[time]
+disabled = false
+format = "[$time]($style)"
+time_format = "%H:%M"
+style = "#{{ outline.hex }}"
+
+[python]
+format = "[$symbol$version( $virtualenv)]($style) "
+symbol = " "
+style = "#{{ outline.hex }}"
+detect_extensions = []
+detect_files = ["pyproject.toml", "requirements.txt", "setup.py", "Pipfile", ".python-version"]
+detect_folders = [".venv", "venv"]
+
+[nodejs]
+format = "[$symbol$version]($style) "
+symbol = " "
+style = "#{{ outline.hex }}"
+detect_extensions = []
