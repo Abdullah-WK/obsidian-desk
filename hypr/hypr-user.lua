@@ -41,11 +41,6 @@ hl.on("hyprland.start", function()
     end
 end)
 
--- Restart the Caelestia shell if it crashes (it died silently on 2026-10-13 and left a blank screen)
-hl.on("hyprland.start", function()
-    hl.exec_cmd(home .. "/.local/bin/caelestia-shell-watchdog")
-end)
-
 -- Bluetooth pairing agent (Caelestia has none, so incoming pairing e.g. Echo Dot gets rejected)
 hl.on("hyprland.start", function()
     hl.exec_cmd("blueman-applet")

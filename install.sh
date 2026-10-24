@@ -150,6 +150,7 @@ fi
 
 # 10 ─ start the companion ------------------------------------------------------------------
 step "10 start"
+install -Dm755 "$HERE/desk-restart.sh" "$HOME/.local/bin/desk-restart" && ok "desk-restart → ~/.local/bin/desk-restart"
 if pgrep -u "$UID" -f '^qs -c onyx' >/dev/null; then
     qs -c onyx kill >/dev/null 2>&1; sleep 0.5
 fi
