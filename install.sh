@@ -20,8 +20,8 @@ for p in papirus-folders power-profiles-daemon; do have "$p" && ok "$p (optional
 if ((${#missing[@]})); then
     todo "sudo pacman -S --needed ${missing[*]}"
 fi
-fc-list | grep -qi "Inter" && ok "font Inter" || warn "font Inter missing until inter-font is installed (Caelestia and the companion fall back)"
-fc-list | grep -q "JetBrainsMono Nerd Font" && ok "font JetBrainsMono Nerd Font" || warn "JetBrainsMono Nerd Font missing"
+[ "$(fc-list : family | grep -ci "^Inter")" -gt 0 ] && ok "font Inter" || warn "font Inter missing until inter-font is installed (Caelestia and the companion fall back)"
+[ "$(fc-list : family | grep -c "JetBrainsMono Nerd Font")" -gt 0 ] && ok "font JetBrainsMono Nerd Font" || warn "JetBrainsMono Nerd Font missing"
 
 # 2 ─ scheme into the CLI data dir --------------------------------------------------
 step "2 colour scheme"
