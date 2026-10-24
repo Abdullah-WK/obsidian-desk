@@ -28,4 +28,6 @@ return {
 
     -- Caelestia's own lock keeps a key, but moves off Super+L once the companion lock owns it
     kbLock                     = lockVerified and "SUPER + CTRL + L" or "SUPER + L",
+    -- Caelestia's session drawer moves off Ctrl+Alt+Del; the onyx session screen owns it and Super+Esc
+    kbSession                  = "SUPER + CTRL + Delete",
 }

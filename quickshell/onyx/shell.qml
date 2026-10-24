@@ -7,6 +7,7 @@ import qs
 import qs.bar
 import qs.lock
 import qs.wallpaper
+import qs.session
 import qs.widgets
 
 ShellRoot {
@@ -28,9 +29,15 @@ ShellRoot {
         id: wallpaperPicker
     }
 
+    SessionScreen {
+        id: sessionScreen
+        lock: sessionLock
+    }
+
     Ipc {
         lock: sessionLock
         wallpaper: wallpaperPicker
+        session: sessionScreen
     }
 
     Variants {

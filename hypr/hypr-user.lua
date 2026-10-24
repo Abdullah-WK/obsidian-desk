@@ -52,8 +52,6 @@ hl.bind("SUPER + O", hl.dsp.exec_cmd("obsidian"))
 -- Laptop panel pinned to 144 Hz at all times (never auto-switch on battery)
 hl.monitor({ output = "eDP-1", mode = "1920x1080@144", position = "auto", scale = 1 })
 
--- Super+Esc opens Caelestia's session screen
-hl.bind("SUPER + Escape", hl.dsp.exec_cmd("caelestia shell drawers toggle session"))
 
 -- Obsidian desk: companion shell, binds, animations, layer rules
 require("hypr-obsidian")
