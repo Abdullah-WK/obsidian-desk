@@ -30,6 +30,9 @@ end)
 -- Temperatures 6499/6500 (wlsunset insists high > low) → no visible colour shift. Tune live with:
 --   pkill wlsunset; setsid -f wlsunset -t 6499 -T 6500 -g 0.85
 local displayGamma = 0.85
+-- With a gamma LUT active the hardware cursor plane went invisible on this iGPU; a software
+-- cursor is drawn inside the frame, so it stays visible and gets the same curve.
+hl.config({ cursor = { no_hardware_cursors = true } })
 hl.on("hyprland.start", function()
     hl.exec_cmd("wlsunset -t 6499 -T 6500 -g " .. displayGamma)
 end)
