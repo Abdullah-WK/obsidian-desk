@@ -162,12 +162,19 @@ window.thunar, .thunar.background {
 .thunar .frame.standard-view .view:hover {
     background-color: #{{ surfaceContainerLow.hex }};
 }
+/* Selection. Thunar tints a selected icon with the view's selected background colour, so the
+   fill is a translucent light grey (icons stay readable) rather than a dark container colour. */
 .thunar .frame.standard-view .view *:selected,
 .thunar .frame.standard-view .view:selected,
+.thunar .frame.standard-view .view:selected:focus {
+    background-color: alpha(#{{ primary.hex }}, 0.18);
+    color: #{{ onSurface.hex }};
+    border-radius: 3px;
+}
 .thunar .frame.standard-view treeview.view:selected,
 .thunar .frame.standard-view treeview.view:selected:focus,
 .thunar .frame.standard-view treeview.view:selected:hover {
-    background-color: #{{ surfaceContainer.hex }};
+    background-color: alpha(#{{ primary.hex }}, 0.14);
     color: #{{ onSurface.hex }};
     box-shadow: inset 2px 0 0 #{{ primary.hex }};
     border-radius: 3px;

@@ -14,7 +14,8 @@ Built from `OBSIDIAN_SPEC.md` (design page: https://claude.ai/artifact/3i4123QPP
 install.sh / uninstall.sh / enable-lock.sh / lib.sh
 caelestia/shell.json  caelestia/cli.json          # merged into ~/.config/caelestia (your extra keys are kept)
 caelestia/templates/gtk.css                        # rendered by the CLI → ~/.local/state/caelestia/theme/gtk.css
-caelestia/hooks/post-scheme.sh                     # cli.json postHook: Papirus grey folders, dconf gtk/icon theme
+caelestia/hooks/post-scheme.sh                     # cli.json postHook: regenerates the Graphite icons, Papirus grey folders, dconf gtk/icon theme
+icons/graphite-generate.py                         # → ~/.local/share/icons/Graphite (monochrome line icons from the live scheme, rest from Papirus-Dark)
 scheme/dark.txt                                    # → <scheme_data_dir>/onyx/obsidian/dark.txt  (needs sudo)
 quickshell/onyx/                                   # → ~/.config/quickshell/onyx   (bar/, lock/, widgets/, services/)
 onyx/config.json                                   # → ~/.config/onyx/config.json  (user settings, see below)

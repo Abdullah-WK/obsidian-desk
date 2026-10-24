@@ -11,7 +11,13 @@ fi
 
 dconf write /org/gnome/desktop/interface/gtk-theme "'adw-gtk3-dark'"
 dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
-dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
+# Graphite: monochrome line icons generated from the live scheme (inherits Papirus-Dark for the rest)
+if [ -f "$HOME/.local/share/icons/Graphite/generate.py" ]; then
+    python3 -I "$HOME/.local/share/icons/Graphite/generate.py" >/dev/null 2>&1 || true
+    dconf write /org/gnome/desktop/interface/icon-theme "'Graphite'"
+else
+    dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
+fi
 
 # Keep the existing tmux colour template (templates/tmux-graphite.conf) live.
 tmux source-file "$HOME/.tmux.conf" >/dev/null 2>&1 || true

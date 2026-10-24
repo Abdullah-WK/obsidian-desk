@@ -94,9 +94,12 @@ for v in gtk-3.0 gtk-4.0; do
 done
 [ -e "$THEME_GTK" ] || warn "$THEME_GTK does not exist yet (appears after the scheme is applied)"
 
-# 7 ─ dconf ----------------------------------------------------------------------------------
-step "7 gtk settings"
-bash "$CAE/hooks/post-scheme.sh" && ok "gtk-theme adw-gtk3-dark · color-scheme prefer-dark · icon-theme Papirus-Dark"
+# 7 ─ icons + dconf ---------------------------------------------------------------------
+step "7 icons and gtk settings"
+mkdir -p "$HOME/.local/share/icons/Graphite"
+install -m644 "$HERE/icons/graphite-generate.py" "$HOME/.local/share/icons/Graphite/generate.py"
+python3 -I "$HOME/.local/share/icons/Graphite/generate.py" >/dev/null 2>&1 && ok "Graphite icon theme generated from the scheme" || warn "Graphite icon generation failed (falls back to Papirus-Dark)"
+bash "$CAE/hooks/post-scheme.sh" && ok "gtk-theme adw-gtk3-dark · color-scheme prefer-dark · icon-theme $(gsettings get org.gnome.desktop.interface icon-theme)"
 if command -v papirus-folders >/dev/null 2>&1; then
     cur=$(papirus-folders -l --theme Papirus-Dark 2>/dev/null | grep -o '>.*' | tr -d '> ' || true)
     [ "$cur" = grey ] && ok "Papirus folders grey" || todo "sudo papirus-folders -C grey --theme Papirus-Dark"
