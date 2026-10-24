@@ -58,25 +58,25 @@
         {
             "type": "command",
             "key": "│ {$3}{$1}  disk  ",
-            "text": "df -h / | awk 'NR==2{printf \"%s · %s\", $3, $5}'",
+            "text": "df -h / | awk 'NR==2{printf \"%s / %s\", $3, $5}'",
             "format": "{$3}{>22}{$1} │"
         },
         {
             "type": "command",
             "key": "│ {$4}{$1}  cpu   ",
-            "text": "for h in /sys/class/hwmon/hwmon*; do case $(cat $h/name) in coretemp|k10temp|zenpower) printf '%d°C' $(( $(cat $h/temp1_input) / 1000 )); break;; esac; done",
+            "text": "for h in /sys/class/hwmon/hwmon*; do case $(cat $h/name) in coretemp|k10temp|zenpower) printf '%dC' $(( $(cat $h/temp1_input) / 1000 )); break;; esac; done",
             "format": "{$4}{>22}{$1} │"
         },
         {
             "type": "command",
             "key": "│ {$4}{$1}  gpu   ",
-            "text": "d=$(ls -d /sys/bus/pci/drivers/nvidia/0000* 2>/dev/null | head -1); if [ -n \"$d\" ] && [ \"$(cat $d/power/runtime_status)\" = active ]; then printf '%s°C' $(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits); else echo asleep; fi",
+            "text": "d=$(ls -d /sys/bus/pci/drivers/nvidia/0000* 2>/dev/null | head -1); if [ -n \"$d\" ] && [ \"$(cat $d/power/runtime_status)\" = active ]; then printf '%sC' $(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits); else echo asleep; fi",
             "format": "{$4}{>22}{$1} │"
         },
         {
             "type": "command",
             "key": "│ {$4}{$1}  batt  ",
-            "text": "b=/sys/class/power_supply/BAT0; [ -d $b ] && printf '%s%% · %s' $(cat $b/capacity) $(cat $b/status | tr 'A-Z' 'a-z') || echo none",
+            "text": "b=/sys/class/power_supply/BAT0; [ -d $b ] && printf '%s%% %s' $(cat $b/capacity) $(cat $b/status | tr 'A-Z' 'a-z') || echo none",
             "format": "{$4}{>22}{$1} │"
         },
         {
