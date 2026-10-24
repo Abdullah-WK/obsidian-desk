@@ -13,10 +13,10 @@ cp -a "$STATE/caelestia/scheme.json" "$BK/scheme-before.json" 2>/dev/null || tru
 step "1 packages"
 have() { pacman -Q "$1" >/dev/null 2>&1 || pacman -Q "$1-git" >/dev/null 2>&1; }
 missing=()
-for p in inter-font ttf-jetbrains-mono-nerd pacman-contrib papirus-icon-theme adw-gtk-theme quickshell; do
+for p in inter-font ttf-jetbrains-mono-nerd pacman-contrib papirus-icon-theme adw-gtk-theme quickshell tumbler; do
     have "$p" && ok "$p" || missing+=("$p")
 done
-for p in papirus-folders power-profiles-daemon; do have "$p" && ok "$p (optional)" || note "$p not installed (optional)"; done
+for p in papirus-folders power-profiles-daemon poppler-glib ffmpegthumbnailer; do have "$p" && ok "$p (optional)" || note "$p not installed (optional: Papirus folder colour, power profiles, PDF and video thumbnails)"; done
 if ((${#missing[@]})); then
     todo "sudo pacman -S --needed ${missing[*]}"
 fi

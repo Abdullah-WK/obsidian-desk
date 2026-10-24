@@ -20,7 +20,7 @@ scheme/dark.txt                                    # → <scheme_data_dir>/onyx/
 quickshell/onyx/                                   # → ~/.config/quickshell/onyx   (bar/, lock/, widgets/, services/)
 onyx/config.json                                   # → ~/.config/onyx/config.json  (user settings, see below)
 hypr/obsidian.lua  hypr/hypr-vars.lua  hypr/hypr-user.lua   # → ~/.config/caelestia/ (Lua dots); hypr/obsidian.conf for classic configs
-thunar/apply.sh                                    # xfconf: details view, hidden menubar (Ctrl+M), location entry
+thunar/apply.sh                                    # xfconf: details view, hidden menubar (Ctrl+M), location entry, thumbnails (tumbler)
 ```
 
 ## Install

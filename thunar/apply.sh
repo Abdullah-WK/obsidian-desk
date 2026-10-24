@@ -8,4 +8,8 @@ q /misc-full-path-in-title              bool   false
 q /last-location-bar                    string ThunarLocationEntry
 q /misc-single-click                    bool   false
 q /last-details-view-visible-columns    string "THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_DATE_MODIFIED"
-echo "thunar: settings applied (details view, menubar hidden: Ctrl+M shows it, location entry)"
+# image / pdf / video previews (needs the tumbler service; poppler-glib for PDFs, ffmpegthumbnailer for video)
+q /misc-thumbnail-mode                  string THUNAR_THUMBNAIL_MODE_ALWAYS
+q /misc-thumbnail-draw-frames           bool   false
+q /misc-thumbnail-max-file-size         uint64 52428800
+echo "thunar: settings applied (details view, menubar hidden: Ctrl+M shows it, location entry, thumbnails on)"
