@@ -40,6 +40,9 @@ hl.animation({ leaf = "workspaces",  enabled = true, speed = 2.5, bezier = "obsi
 hl.animation({ leaf = "layersIn",    enabled = true, speed = 2,   bezier = "obsidianDecel", style = "fade" })
 hl.animation({ leaf = "layersOut",   enabled = true, speed = 2,   bezier = "obsidianStd",   style = "fade" })
 
+-- Unfocused windows recede slightly (redraws only on focus change)
+hl.config({ decoration = { dim_inactive = true, dim_strength = 0.08 } })
+
 -- Binds
 if lockVerified then
     hl.bind("SUPER + L", hl.dsp.exec_cmd("qs -c onyx ipc call lock lock"))

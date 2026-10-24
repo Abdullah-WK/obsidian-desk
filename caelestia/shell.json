@@ -52,7 +52,7 @@
       "inhibitWhenAudio": true,
       "timeouts": [
         {
-          "timeout": 300,
+          "timeout": 600,
           "idleAction": [
             "qs",
             "-c",
@@ -224,7 +224,7 @@
   "utilities": {
     "maxToasts": 3,
     "toasts": {
-      "configLoaded": true,
+      "configLoaded": false,
       "chargingChanged": true,
       "gameModeChanged": true,
       "dndChanged": true,

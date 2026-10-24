@@ -74,6 +74,8 @@ bar, lock, widgets, GTK, foot, btop and Hyprland together.
 
 ## Notes
 
+- Also applied on this machine: `~/.config/foot/foot.ini` alpha 1.0 (dots-owned file, `caelestia update` may reset it).
+
 - Widgets sit on the `bottom` layer (not `background`) so Caelestia's wallpaper layer cannot
   cover them when the shell restarts. They are click-through except the updates card.
 - Game mode (Caelestia) hides the bar, hot zone and widgets; the state is read on start, on

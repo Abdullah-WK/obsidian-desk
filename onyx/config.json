@@ -19,7 +19,7 @@
     "Logging out..."
   ],
   "lock": {
-    "hideNotifs": false,
+    "hideNotifs": true,
     "use24h": null,
     "showWeather": true,
     "showMedia": true,
