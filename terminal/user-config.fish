@@ -15,8 +15,3 @@ end
 # fzf: Ctrl+R history · Ctrl+T files · Alt+C directories, colours from the scheme
 source ~/.local/state/caelestia/theme/fzf.fish 2>/dev/null
 command -q fzf && fzf --fish | source
-
-# greeting: fastfetch with the scheme-coloured template
-function fish_greeting
-    command -q fastfetch && fastfetch -c ~/.local/state/caelestia/theme/fastfetch.jsonc
-end

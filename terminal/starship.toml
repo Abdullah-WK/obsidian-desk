@@ -7,8 +7,8 @@
 add_newline = false
 continuation_prompt = "[› ](#{{ outline.hex }})"
 
-format = "$username$hostname$directory$git_branch$git_status$python$nodejs$status$character"
-right_format = "$cmd_duration$time"
+format = "$username$hostname$directory$git_branch$git_status$character"
+right_format = ""
 
 [username]
 show_always = true
@@ -54,34 +54,3 @@ format = "$symbol "
 success_symbol = "[›](bold #{{ primary.hex }})"
 error_symbol = "[›](bold red)"
 vimcmd_symbol = "[‹](bold #{{ primary.hex }})"
-
-[status]
-disabled = false
-format = "[$symbol$status]($style) "
-symbol = "✗ "
-style = "red"
-
-[cmd_duration]
-min_time = 2000
-format = "[$duration]($style) "
-style = "#{{ outline.hex }}"
-
-[time]
-disabled = false
-format = "[$time]($style)"
-time_format = "%H:%M"
-style = "#{{ outline.hex }}"
-
-[python]
-format = "[$symbol$version( $virtualenv)]($style) "
-symbol = " "
-style = "#{{ outline.hex }}"
-detect_extensions = []
-detect_files = ["pyproject.toml", "requirements.txt", "setup.py", "Pipfile", ".python-version"]
-detect_folders = [".venv", "venv"]
-
-[nodejs]
-format = "[$symbol$version]($style) "
-symbol = " "
-style = "#{{ outline.hex }}"
-detect_extensions = []

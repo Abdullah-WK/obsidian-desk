@@ -6,7 +6,6 @@ cp -n "$F" "$F.bak-obsidian" 2>/dev/null
 python3 - "$F" <<'PY'
 import re,sys
 p=sys.argv[1]; s=open(p).read()
-s=re.sub(r'^pad=.*$','pad=14x14',s,flags=re.M)
 s=re.sub(r'^alpha=.*$','alpha=1.0',s,flags=re.M)
 def ensure(section,key,val):
     global s
@@ -22,4 +21,4 @@ def ensure(section,key,val):
 ensure('mouse','hide-when-typing','yes')
 open(p,'w').write(s)
 PY
-echo "foot: pad 14x14, opaque, hide pointer while typing (Ctrl+Shift+U opens URLs by default)"
+echo "foot: opaque, pointer hidden while typing"

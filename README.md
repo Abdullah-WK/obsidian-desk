@@ -21,7 +21,7 @@ quickshell/onyx/                                   # → ~/.config/quickshell/on
 onyx/config.json                                   # → ~/.config/onyx/config.json  (user settings, see below)
 hypr/obsidian.lua  hypr/hypr-vars.lua  hypr/hypr-user.lua   # → ~/.config/caelestia/ (Lua dots); hypr/obsidian.conf for classic configs
 thunar/apply.sh                                    # xfconf: details view, hidden menubar (Ctrl+M), location entry, thumbnails (tumbler)
-terminal/                                          # fish user-config (fastfetch greeting, fzf keys, bat, h <cmd>), scheme templates for fastfetch/fzf/starship, foot tweaks
+terminal/                                          # fish user-config (fzf keys, bat, h <cmd>), scheme templates for fzf/starship, foot tweaks
 ```
 
 ## Install
