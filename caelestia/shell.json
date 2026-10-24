@@ -214,7 +214,8 @@
   },
   "osd": {
     "hideDelay": 1500,
-    "enableMicrophone": false
+    "enableMicrophone": false,
+    "enabled": false
   },
   "services": {
     "smartScheme": false,
@@ -238,6 +239,6 @@
     }
   },
   "sidebar": {
-    "enabled": false
+    "showOnHover": false
   }
 }
