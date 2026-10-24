@@ -3,10 +3,21 @@
   "barPinned": false,
   "updatesIntervalMin": 30,
   "widgetsEnabled": true,
-  "widgets": { "clock": true, "system": true, "vitals": true, "updates": true },
+  "widgets": {
+    "clock": true,
+    "system": true,
+    "vitals": true,
+    "updates": true
+  },
   "perfCommand": "foot -e btop",
   "updatesCommand": "foot -e paru",
-  "logoutCommand": ["hyprshutdown", "--vt", "1", "-t", "Logging out..."],
+  "logoutCommand": [
+    "hyprshutdown",
+    "--vt",
+    "1",
+    "-t",
+    "Logging out..."
+  ],
   "lock": {
     "hideNotifs": false,
     "use24h": null,
@@ -14,5 +25,6 @@
     "showMedia": true,
     "dotField": true
   },
-  "lockDebugAutoUnlockSec": 30
+  "lockDebugAutoUnlockSec": 30,
+  "trayHidden": []
 }

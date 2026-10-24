@@ -22,6 +22,7 @@ Singleton {
     readonly property var perfCommand: toCommand(data.perfCommand ?? "foot -e btop")
     readonly property var updatesCommand: toCommand(data.updatesCommand ?? "foot -e paru")
     readonly property var logoutCommand: toCommand(data.logoutCommand ?? "loginctl terminate-session self")
+    readonly property var trayHidden: Array.isArray(data.trayHidden) ? data.trayHidden : []
 
     readonly property bool lockHideNotifs: lockData.hideNotifs ?? false
     // null → follow the locale; true/false force 24 h / 12 h

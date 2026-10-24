@@ -205,6 +205,9 @@ Scope {
                         id: battItem
                         host: root
                     }
+                    TrayItem {
+                        host: root
+                    }
                     SessionItem {
                         id: sessItem
                         host: root
