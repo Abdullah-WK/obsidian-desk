@@ -15,6 +15,14 @@ ShellRoot {
         id: sessionLock
     }
 
+    // Login: hypr-obsidian.lua starts the shell with ONYX_LOCK_ON_START=1 once the lock is
+    // verified, so the lock is the first thing on screen (hypr-user.lua re-asserts it after).
+    Timer {
+        running: Quickshell.env("ONYX_LOCK_ON_START") === "1"
+        interval: 150
+        onTriggered: sessionLock.engage()
+    }
+
     Ipc {
         lock: sessionLock
     }

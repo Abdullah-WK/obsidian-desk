@@ -16,9 +16,14 @@ end
 -- the login lock stay on Caelestia's own lock.
 local lockVerified = exists(cfg .. "/onyx/.lock-verified")
 
--- Companion Quickshell config (bar, lock, widgets)
+-- Companion Quickshell config (bar, lock, widgets). Once the lock is verified it starts
+-- locked, so the lock screen is the first thing on screen at every login.
 hl.on("hyprland.start", function()
-    hl.exec_cmd("qs -c onyx")
+    if lockVerified then
+        hl.exec_cmd("env ONYX_LOCK_ON_START=1 qs -c onyx")
+    else
+        hl.exec_cmd("qs -c onyx")
+    end
 end)
 
 -- Motion: standard / decel curves, 200–250 ms (matches the shell's 0.7 duration scale)

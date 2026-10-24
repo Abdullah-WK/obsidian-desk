@@ -30,7 +30,7 @@ BarItem {
 
     Icon {
         text: root.icon
-        color: root.pct < 0.1 && !root.charging ? Scheme.error : root.ink
+        color: root.pct < 0.15 && !root.charging ? Scheme.error : root.ink
         anchors.verticalCenter: parent.verticalCenter
     }
     Ink {

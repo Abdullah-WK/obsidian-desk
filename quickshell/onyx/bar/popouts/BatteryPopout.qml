@@ -48,7 +48,7 @@ Column {
         thickness: 4
         value: root.pct
         hot: 2
-        fillColor: root.pct < 0.1 && !root.charging ? Scheme.error : Scheme.primary
+        fillColor: root.pct < 0.15 && !root.charging ? Scheme.error : Scheme.success
     }
 
     PopCta {

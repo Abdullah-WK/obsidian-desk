@@ -1,6 +1,8 @@
-// Dot field: 3 px squares on a 14 px grid. Wave canvas repaints every 500 ms (1 s idle);
-// the lamp canvas repaints only around the pointer (≤ 30 fps) and composites exactly:
-// a_lamp = (a_target − a_wave) / (1 − a_wave). Plus the static vignette.
+// Dot field: 3 px squares on a 14 px grid.
+// The slow wave is painted ONCE into a canvas one period wider than the screen and slid left
+// in whole 14 px grid steps (period 574 px = 41 dots, speed 63 px/s = the spec's 0.7 rad/s
+// over x/90), so at rest nothing is repainted. The lamp canvas repaints only around the
+// pointer (≤ 30 fps) and composites exactly: a_lamp = (a_target − a_wave) / (1 − a_wave).
 import QtQuick
 import qs
 
@@ -18,9 +20,13 @@ Item {
     readonly property int step: 14
     readonly property int dot: 3
     readonly property real radius: 260
-    property real phase: 0
-    property real lastTick: Date.now()
+    readonly property int period: 574                     // 41 × 14 px: one wave period along x
+    readonly property real kx: 2 * Math.PI / period        // ≈ 1/91.4, spec: 1/90
+    property int steps: 0
+    readonly property int offsetPx: (steps * step) % period
     property var prevBox: null
+
+    clip: true
 
     function pointerMoved(x: real, y: real): void {
         pointerX = x;
@@ -35,8 +41,9 @@ Item {
         lamp.requestPaint();
     }
 
+    // wave alpha of the dot drawn at screen position (x, y) right now
     function waveAlpha(x: real, y: real): real {
-        return 0.04 + 0.03 * (0.5 + 0.5 * Math.sin(phase * 0.7 + x / 90 + y / 140));
+        return 0.04 + 0.03 * (0.5 + 0.5 * Math.sin((x + offsetPx) * kx + y / 140));
     }
 
     function fillBuckets(ctx: var, buckets: var): void {
@@ -50,15 +57,13 @@ Item {
         }
     }
 
+    // one grid step every 222 ms (444 ms idle) = 63 px/s, the spec's wave speed
     Timer {
         running: root.running && root.visible
-        interval: root.idle ? 1000 : 500
+        interval: root.idle ? 444 : 222
         repeat: true
         onTriggered: {
-            const now = Date.now();
-            root.phase += (now - root.lastTick) / 1000 * (root.idle ? 0.5 : 1);
-            root.lastTick = now;
-            wave.requestPaint();
+            root.steps++;
             if (root.hasPointer)
                 lamp.requestPaint();
         }
@@ -72,8 +77,10 @@ Item {
 
     Canvas {
         id: wave
-        anchors.fill: parent
-        renderStrategy: Canvas.Cooperative
+        x: -root.offsetPx
+        width: root.width + root.period
+        height: root.height
+        renderStrategy: Canvas.Threaded
 
         onPaint: {
             const ctx = getContext("2d");
@@ -82,9 +89,11 @@ Item {
             const half = root.step / 2, d2 = root.dot / 2;
             for (let y = half; y < height; y += root.step) {
                 for (let x = half; x < width; x += root.step) {
-                    const a = Math.round(root.waveAlpha(x, y) * 200) / 200;
+                    const a = Math.round((0.04 + 0.03 * (0.5 + 0.5 * Math.sin(x * root.kx + y / 140))) * 200) / 200;
                     const k = a.toFixed(3);
-                    if (!buckets[k]) buckets[k] = []; buckets[k].push(x - d2, y - d2);
+                    if (!buckets[k])
+                        buckets[k] = [];
+                    buckets[k].push(x - d2, y - d2);
                 }
             }
             root.fillBuckets(ctx, buckets);
@@ -94,7 +103,7 @@ Item {
     Canvas {
         id: lamp
         anchors.fill: parent
-        renderStrategy: Canvas.Cooperative
+        renderStrategy: Canvas.Threaded
 
         onPaint: {
             const ctx = getContext("2d");
@@ -135,7 +144,9 @@ Item {
                     if (al < 0.004)
                         continue;
                     const k = (Math.round(al * 100) / 100).toFixed(2);
-                    if (!buckets[k]) buckets[k] = []; buckets[k].push(x - d2, y - d2);
+                    if (!buckets[k])
+                        buckets[k] = [];
+                    buckets[k].push(x - d2, y - d2);
                 }
             }
             root.fillBuckets(ctx, buckets);

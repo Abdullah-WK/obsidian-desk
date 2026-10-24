@@ -31,7 +31,8 @@ Singleton {
             secondary: "#b4b4bb",
             tertiary: "#d0d0d6",
             error: "#ffb4ab",
-            onError: "#690005"
+            onError: "#690005",
+            success: "#a9c2ad"
         })
 
     property var colours: ({})
@@ -62,6 +63,7 @@ Singleton {
     readonly property color tertiary: c("tertiary")
     readonly property color error: c("error")
     readonly property color fgError: c("onError")
+    readonly property color success: c("success")
     readonly property color archIce: "#8fb8d8"
 
     function alpha(col: color, a: real): color {

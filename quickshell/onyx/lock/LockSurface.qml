@@ -33,6 +33,9 @@ FocusScope {
     property bool idle: false
     property bool glyphHover: false
     property bool irisOn: false
+    // continuous motions (avatar ring, scan line, pulses) advance on one 30 fps timer instead of
+    // per-frame animations, so the surface is not redrawn at the display rate while at rest
+    property real t: 0
 
     function px(v: real): real {
         return v * s;
@@ -73,6 +76,14 @@ FocusScope {
         function onActivity(): void {
             root.wake();
         }
+    }
+
+    Timer {
+        id: tick
+        interval: 33
+        repeat: true
+        running: !root.idle && !root.unlocking && !Config.reducedMotion && root.visible
+        onTriggered: root.t += 0.033
     }
 
     Timer {
@@ -611,13 +622,7 @@ FocusScope {
                                     sweepAngle: 90
                                 }
                             }
-                            RotationAnimation on rotation {
-                                running: !root.unlocking && !Config.reducedMotion
-                                from: 0
-                                to: 360
-                                duration: 6000
-                                loops: Animation.Infinite
-                            }
+                            rotation: (root.t / 6) * 360 % 360
                         }
                     }
                 }
@@ -678,6 +683,7 @@ FocusScope {
                         required property string key
                         required property real value
                         required property string display
+                        property color barColor: value > 0.85 ? Scheme.error : Scheme.fgSurfaceVariant
                         width: Math.max(root.px(96), tileCol.implicitWidth + root.px(28))
                         height: tileCol.implicitHeight + root.px(26)
                         radius: 5
@@ -722,7 +728,7 @@ FocusScope {
                             anchors.bottom: parent.bottom
                             height: 2
                             width: parent.width * Math.max(0, Math.min(1, tile.value))
-                            color: tile.value > 0.85 ? Scheme.error : Scheme.fgSurfaceVariant
+                            color: tile.barColor
                         }
                     }
 
@@ -744,6 +750,7 @@ FocusScope {
                         value: root.battPct
                         display: Math.round(root.battPct * 100) + "%"
                         visible: root.hasBattery
+                        barColor: root.lowBattery ? Scheme.error : Scheme.success
                     }
                 }
             }
@@ -855,17 +862,8 @@ FocusScope {
                                 width: parent.width * 0.3
                                 height: 1
                                 color: Scheme.fgSurfaceVariant
-                                SequentialAnimation on x {
-                                    running: !root.idle && !root.unlocking && !Config.reducedMotion
-                                    loops: Animation.Infinite
-                                    NumberAnimation {
-                                        from: -scan.width
-                                        to: scan.parent.width
-                                        duration: 2800
-                                        easing.type: Easing.BezierSpline
-                                        easing.bezierCurve: Theme.standard
-                                    }
-                                }
+                                readonly property real p: (root.t % 2.8) / 2.8
+                                x: -width + (p * p * (3 - 2 * p)) * (parent.width + width)
                             }
                         }
                         Ink {
@@ -908,6 +906,7 @@ FocusScope {
                     label: "touch sensor"
                     ringColor: Scheme.archIce
                     pulse: root.state.fprintWaiting
+                    pulseT: root.t
                     size: root.px(56)
                     iconSize: root.px(24)
                     scaleF: root.s
@@ -973,12 +972,7 @@ FocusScope {
                     size: root.px(16)
                     color: Scheme.outline
                     anchors.verticalCenter: parent.verticalCenter
-                    SequentialAnimation on opacity {
-                        running: !Config.reducedMotion
-                        loops: Animation.Infinite
-                        NumberAnimation { to: 0.45; duration: 1600; easing.type: Easing.InOutSine }
-                        NumberAnimation { to: 1; duration: 1600; easing.type: Easing.InOutSine }
-                    }
+                    opacity: 0.725 + 0.275 * Math.cos(2 * Math.PI * root.t / 3.2)
                 }
                 Ink {
                     mono: true
@@ -1155,6 +1149,7 @@ FocusScope {
     readonly property bool hasBattery: battery ? battery.isLaptopBattery : false
     readonly property real battPct: battery?.percentage ?? 0
     readonly property bool charging: battery ? (battery.state === UPowerDeviceState.Charging || battery.state === UPowerDeviceState.FullyCharged) : false
+    readonly property bool lowBattery: battPct < 0.15 && !charging
 
     property var notifs: []
 

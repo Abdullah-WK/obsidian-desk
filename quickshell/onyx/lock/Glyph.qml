@@ -15,6 +15,7 @@ Item {
     property bool hold: false
     property color ringColor: Scheme.fgSurface
     property bool pulse: false
+    property real pulseT: 0   // driven by the surface tick; pulses 3.2 s while waiting
     property real size: 56
     property real iconSize: 24
     property real scaleF: 1
@@ -172,21 +173,7 @@ Item {
             }
         }
 
-        SequentialAnimation on opacity {
-            running: root.pulse && !root.hot && !root.done
-            loops: Animation.Infinite
-            NumberAnimation {
-                to: 0.45
-                duration: 1600
-                easing.type: Easing.InOutSine
-            }
-            NumberAnimation {
-                to: 1
-                duration: 1600
-                easing.type: Easing.InOutSine
-            }
-            onStopped: glyph.opacity = 1
-        }
+        opacity: root.pulse && !root.hot && !root.done ? 0.725 + 0.275 * Math.cos(2 * Math.PI * root.pulseT / 3.2) : 1
     }
 
     Ink {
