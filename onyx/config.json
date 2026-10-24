@@ -1,7 +1,7 @@
 {
   "reducedMotion": false,
   "barPinned": true,
-  "updatesIntervalMin": 30,
+  "updatesIntervalMin": 60,
   "widgetsEnabled": true,
   "widgets": {
     "clock": true,
@@ -26,5 +26,6 @@
     "dotField": true
   },
   "lockDebugAutoUnlockSec": 30,
-  "trayHidden": []
+  "trayHidden": [],
+  "updatesOnBattery": false
 }

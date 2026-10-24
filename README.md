@@ -60,7 +60,7 @@ the companion lock with a 30 s debug auto-unlock (`lockDebugAutoUnlockSec` in
 | Lock | `qs -c onyx ipc call lock lock`; global shortcut `onyx:lock` |
 | Restart everything | `desk-restart` (Hyprland reload + both shells; refuses while locked). No watchdog: if a shell dies, run this. |
 | Caelestia | dashboard/launcher/sidebar on their keybinds; its own bar (`bar.excludedScreens`) , the right-edge OSD (`osd.enabled: false`) and the sidebar hover (`sidebar.showOnHover: false`) are off, the tray lives in the top bar |
-| Settings | `~/.config/onyx/config.json` (watched): `reducedMotion`, `barPinned`, `updatesIntervalMin`, `widgetsEnabled`, `widgets.*`, `perfCommand`, `updatesCommand`, `logoutCommand`, `trayHidden`, `lock.{hideNotifs,use24h,showWeather,showMedia,dotField}` |
+| Settings | `~/.config/onyx/config.json` (watched): `reducedMotion`, `barPinned`, `updatesIntervalMin`, `updatesOnBattery`, `widgetsEnabled`, `widgets.*`, `perfCommand`, `updatesCommand`, `logoutCommand`, `trayHidden`, `lock.{hideNotifs,use24h,showWeather,showMedia,dotField}` |
 
 Colours follow `~/.local/state/caelestia/scheme.json`, so `caelestia scheme set …` recolours the
 bar, lock, widgets, GTK, foot, btop and Hyprland together.

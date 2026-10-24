@@ -1,5 +1,6 @@
 pragma ComponentBehavior: Bound
-// Two 3×10 bars (cpu, mem) + labels. Polls (2 s) only while the bar is shown.
+// Two 3×12 bars (cpu, mem) + labels. Polls at the slow rate (5 s) while the bar is shown;
+// the popout switches SysStats to 2 s while it is open.
 // Click → Config.perfCommand. Popout: performance bars.
 import QtQuick
 import Quickshell
@@ -20,9 +21,9 @@ BarItem {
     onActivated: Quickshell.execDetached(Config.perfCommand)
 
     readonly property bool consuming: host.shown
-    onConsumingChanged: SysStats.fast += consuming ? 1 : -1
-    Component.onCompleted: if (consuming) SysStats.fast++
-    Component.onDestruction: if (consuming) SysStats.fast--
+    onConsumingChanged: SysStats.slow += consuming ? 1 : -1
+    Component.onCompleted: if (consuming) SysStats.slow++
+    Component.onDestruction: if (consuming) SysStats.slow--
 
     component Gauge: Row {
         required property string label

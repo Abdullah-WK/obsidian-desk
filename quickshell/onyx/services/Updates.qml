@@ -1,9 +1,11 @@
 pragma Singleton
 // Pending updates: `checkupdates` (+ `paru -Qua` when paru exists). Checked every
-// Config.updatesIntervalMin minutes, only while a connection is active, and on demand.
+// Config.updatesIntervalMin minutes, only while a connection is active and (unless
+// Config.updatesOnBattery) the machine is on mains, and on demand.
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Services.UPower
 import qs
 
 Singleton {
@@ -30,7 +32,7 @@ Singleton {
     }
 
     Timer {
-        running: Nmcli.connected
+        running: Nmcli.connected && (Config.updatesOnBattery || !UPower.onBattery)
         interval: Config.updatesIntervalMin * 60000
         repeat: true
         triggeredOnStart: true
