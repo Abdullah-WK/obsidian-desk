@@ -52,7 +52,7 @@
       "inhibitWhenAudio": true,
       "timeouts": [
         {
-          "timeout": 600,
+          "timeout": 900,
           "idleAction": [
             "qs",
             "-c",
@@ -64,15 +64,9 @@
           ]
         },
         {
-          "timeout": 420,
+          "timeout": 1800,
           "idleAction": "dpms off",
           "returnAction": "dpms on"
-        },
-        {
-          "timeout": 1200,
-          "idleAction": [
-            "suspendThenHibernate"
-          ]
         }
       ]
     }
