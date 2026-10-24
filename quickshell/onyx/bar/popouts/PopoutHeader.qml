@@ -8,6 +8,10 @@ Item {
 
     property string label: ""
     property string value: ""
+    property bool showSwitch: false
+    property bool checked: false
+
+    signal toggled
 
     implicitHeight: 24
     width: parent.width
@@ -32,8 +36,18 @@ Item {
         text: root.value
         size: 10.5
         color: Scheme.fgSurfaceVariant
-        anchors.right: parent.right
+        anchors.right: sw.visible ? sw.left : parent.right
+        anchors.rightMargin: sw.visible ? 10 : 0
         anchors.baseline: parent.top
         anchors.baselineOffset: 12
+    }
+    PopSwitch {
+        id: sw
+        visible: root.showSwitch
+        checked: root.checked
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: 1
+        onToggled: root.toggled()
     }
 }

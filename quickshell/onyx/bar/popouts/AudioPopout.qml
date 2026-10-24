@@ -46,7 +46,10 @@ Column {
 
     PopoutHeader {
         label: "audio"
-        value: (root.sink?.audio?.muted ? "muted · " : "") + Math.round(root.volume * 100) + "%"
+        value: root.sink?.audio?.muted ? "muted" : Math.round(root.volume * 100) + "%"
+        showSwitch: root.sink?.audio !== undefined && root.sink?.audio !== null
+        checked: !(root.sink?.audio?.muted ?? true)
+        onToggled: if (root.sink?.audio) root.sink.audio.muted = !root.sink.audio.muted
     }
 
     Item {

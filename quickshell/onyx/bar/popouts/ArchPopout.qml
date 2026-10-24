@@ -2,6 +2,7 @@
 import QtQuick
 import Quickshell
 import qs
+import qs.services
 
 Column {
     id: root
@@ -37,6 +38,15 @@ Column {
             icon: "settings"
             text: "Shell settings"
             onClicked: root.run(["caelestia", "shell", "nexus", "open"])
+        }
+    }
+
+    PopCta {
+        text: Updates.count > 0 ? `${Updates.count} updates · open ${Config.updatesCommand.slice(-1)[0]}` : Updates.count === 0 ? "up to date" : "updates not checked yet"
+        clickable: Updates.count > 0
+        onClicked: {
+            Updates.open();
+            root.host.closePopout();
         }
     }
 }

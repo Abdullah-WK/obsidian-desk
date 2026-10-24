@@ -19,7 +19,7 @@ BarItem {
         host: root.host
     }
 
-    onActivated: if (sink?.audio) sink.audio.muted = !sink.audio.muted
+    onActivated: host.openPopout(root)
     onScrolled: delta => {
         if (!sink?.audio)
             return;

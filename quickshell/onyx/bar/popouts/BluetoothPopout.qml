@@ -34,6 +34,9 @@ Column {
     PopoutHeader {
         label: "bluetooth"
         value: root.adapter ? (root.adapter.enabled ? "on" : "off") : "none"
+        showSwitch: root.adapter !== null
+        checked: root.adapter?.enabled ?? false
+        onToggled: if (root.adapter) root.adapter.enabled = !root.adapter.enabled
     }
 
     Column {

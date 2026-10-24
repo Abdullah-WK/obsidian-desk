@@ -56,7 +56,7 @@ the companion lock with a 30 s debug auto-unlock (`lockDebugAutoUnlockSec` in
 
 | | |
 |---|---|
-| Top bar | permanent by default (`barPinned`, reserves its 36 px); with `barPinned: false` it hides above the edge and the top edge reveals it; hover an item for its popout |
+| Top bar | items: Arch (updates badge, launcher/wallpaper/settings), workspaces, window, now-playing (while playing), clock · date, tray, notifications (DND, clear), cpu/mem, wifi · bluetooth · audio (switches in the popout headers), battery, power. Permanent by default (`barPinned`, reserves its 36 px); with `barPinned: false` it hides above the edge and the top edge reveals it; hover an item for its popout |
 | Pin the bar | Super+Shift+B or `qs -c onyx ipc call bar pin\|unpin\|toggle`; Esc unpins; Tab/Enter work while pinned |
 | Lock | `qs -c onyx ipc call lock lock`; global shortcut `onyx:lock` |
 | Wallpaper picker | Super+Shift+W or `qs -c onyx ipc call wallpaper toggle`: strip of sheared thumbnails; arrows/hjkl, Tab wraps, u/d page, Enter or click selects (`caelestia wallpaper -f`), Esc closes. `wallpaper.{dir,shown,height,shear,keepOpen}` in the config |

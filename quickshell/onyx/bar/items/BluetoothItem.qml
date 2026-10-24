@@ -20,7 +20,7 @@ BarItem {
     }
     visible: adapter !== null
 
-    onActivated: if (adapter) adapter.enabled = !adapter.enabled
+    onActivated: host.openPopout(root)
 
     Icon {
         text: root.icon

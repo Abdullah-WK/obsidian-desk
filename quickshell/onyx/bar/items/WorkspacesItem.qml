@@ -14,8 +14,11 @@ BarItem {
 
     readonly property HyprlandMonitor monitor: Hyprland.monitorFor(screen)
     readonly property int activeId: monitor?.activeWorkspace?.id ?? 1
-    readonly property int shown: 5
-    readonly property int first: activeId > shown ? activeId - shown + 1 : 1
+    readonly property int maxShown: 5
+    // last occupied workspace id (within the window) → trailing empty squares are hidden
+    readonly property int lastOccupied: Hyprland.workspaces.values.reduce((m, w) => (w.id > 0 && (w.lastIpcObject?.windows ?? 0) > 0 && w.id > m) ? w.id : m, 0)
+    readonly property int first: activeId > maxShown ? activeId - maxShown + 1 : 1
+    readonly property int shown: Math.max(1, Math.min(maxShown, Math.max(activeId, lastOccupied) - first + 1))
 
     interactive: false
     contentSpacing: 5
@@ -41,7 +44,7 @@ BarItem {
         Repeater {
             model: root.shown
 
-            Rectangle {
+            Item {
                 id: square
 
                 required property int index
@@ -50,10 +53,9 @@ BarItem {
                 readonly property bool active: root.activeId === wsId
                 readonly property bool occupied: ws ? (ws.lastIpcObject?.windows ?? 0) > 0 : false
 
+                // full item height as the hit area; the 8 px square sits in the middle
                 width: active ? 16 : 8
-                height: 8
-                radius: 2
-                color: active ? Scheme.primary : occupied ? Scheme.fgSurfaceVariant : Scheme.outlineVariant
+                height: Theme.itemHeight
 
                 Behavior on width {
                     NumberAnimation {
@@ -62,9 +64,18 @@ BarItem {
                         easing.bezierCurve: Theme.standard
                     }
                 }
-                Behavior on color {
-                    ColorAnimation {
-                        duration: Theme.colour
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: 8
+                    radius: 2
+                    color: square.active ? Scheme.primary : square.occupied ? Scheme.fgSurfaceVariant : Scheme.outlineVariant
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: Theme.colour
+                        }
                     }
                 }
 

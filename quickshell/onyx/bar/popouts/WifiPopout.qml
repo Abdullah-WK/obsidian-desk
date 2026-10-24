@@ -49,6 +49,9 @@ Column {
     PopoutHeader {
         label: Nmcli.type === "ethernet" ? "ethernet" : "wifi"
         value: Nmcli.type === "ethernet" ? "wired" : !Nmcli.wifiEnabled ? "off" : Nmcli.connected ? Nmcli.dbm + " dBm" : "disconnected"
+        showSwitch: true
+        checked: Nmcli.wifiEnabled
+        onToggled: Nmcli.setWifi(!Nmcli.wifiEnabled)
     }
 
     Column {

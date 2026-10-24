@@ -152,11 +152,19 @@ Scope {
                     id: barHover
                 }
 
+                // 1 px hairline between logical groups
+                component GroupSep: Rectangle {
+                    width: 1
+                    height: 14
+                    color: Scheme.outlineVariant
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
                 Row {
                     id: leftGroup
                     x: Theme.barPadding
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.itemGap
+                    spacing: Theme.s2
 
                     ArchItem {
                         id: archItem
@@ -170,7 +178,14 @@ Scope {
                     ActiveWindowItem {
                         id: awItem
                         host: root
-                        maxWidth: Math.max(80, barBody.width / 2 - leftGroup.x - 170 - clock.width / 2 - 20)
+                        maxWidth: Math.max(80, barBody.width / 2 - leftGroup.x - 170 - clock.width / 2 - 20 - (mediaItem.visible ? mediaItem.width + 20 : 0))
+                    }
+                    GroupSep {
+                        visible: mediaItem.visible
+                    }
+                    MediaItem {
+                        id: mediaItem
+                        host: root
                     }
                 }
 
@@ -178,14 +193,6 @@ Scope {
                     id: clock
                     host: root
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                // 1 px hairline between logical groups of the right cluster
-                component GroupSep: Rectangle {
-                    width: 1
-                    height: 14
-                    color: Scheme.outlineVariant
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -202,6 +209,9 @@ Scope {
                     }
                     GroupSep {
                         visible: rightGroup.trayVisible
+                    }
+                    NotifsItem {
+                        host: root
                     }
                     PerfItem {
                         id: perfItem
