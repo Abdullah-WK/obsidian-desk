@@ -31,7 +31,7 @@
         {
             "type": "kernel",
             "key": "│ {$2}{$1}  kernel",
-            "format": "{$2}{release>22}{$1} │"
+            "format": "{$2}{release>22}{$1}                   │"
         },
         {
             "type": "command",
