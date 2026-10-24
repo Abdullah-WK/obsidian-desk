@@ -18,7 +18,7 @@ BarItem {
     // icon themes name app icons after the app id / class in nearly every case; fall back to the desktop entry
     readonly property var entry: appClass ? (DesktopEntries.heuristicLookup(appClass) ?? DesktopEntries.byId(appClass)) : null
     readonly property string iconName: entry?.icon ? entry.icon : appClass.toLowerCase()
-    readonly property string iconSource: appClass ? Quickshell.iconPath(iconName, "") : ""
+    readonly property string iconSource: appClass ? Quickshell.iconPath(iconName, "application-x-executable") : ""
 
     visible: toplevel !== null && (appClass !== "" || title !== "")
     contentSpacing: 0
