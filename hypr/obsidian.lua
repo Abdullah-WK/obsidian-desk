@@ -27,11 +27,11 @@ hl.on("hyprland.start", function()
 end)
 
 -- Display gamma: a slightly steeper curve so blacks and dark greys sit deeper ("OLED" feel).
--- Temperatures equal → no colour shift. Tune the number live with:
---   pkill wlsunset; setsid -f wlsunset -t 6500 -T 6500 -g 0.9
+-- Temperatures 6499/6500 (wlsunset insists high > low) → no visible colour shift. Tune live with:
+--   pkill wlsunset; setsid -f wlsunset -t 6499 -T 6500 -g 0.9
 local displayGamma = 0.9
 hl.on("hyprland.start", function()
-    hl.exec_cmd("wlsunset -t 6500 -T 6500 -g " .. displayGamma)
+    hl.exec_cmd("wlsunset -t 6499 -T 6500 -g " .. displayGamma)
 end)
 
 -- Motion: standard / decel curves, 200–250 ms (matches the shell's 0.7 duration scale)
