@@ -31,7 +31,7 @@ Column {
         PopRow {
             icon: "image"
             text: "Wallpaper"
-            onClicked: root.run(["caelestia", "wallpaper"])
+            onClicked: root.run(["qs", "-c", "onyx", "ipc", "call", "wallpaper", "open"])
         }
         PopRow {
             icon: "settings"

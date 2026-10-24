@@ -6,6 +6,7 @@ import Quickshell
 import qs
 import qs.bar
 import qs.lock
+import qs.wallpaper
 import qs.widgets
 
 ShellRoot {
@@ -23,8 +24,13 @@ ShellRoot {
         onTriggered: sessionLock.engage()
     }
 
+    WallpaperPicker {
+        id: wallpaperPicker
+    }
+
     Ipc {
         lock: sessionLock
+        wallpaper: wallpaperPicker
     }
 
     Variants {

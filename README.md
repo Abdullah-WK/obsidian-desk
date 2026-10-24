@@ -58,9 +58,10 @@ the companion lock with a 30 s debug auto-unlock (`lockDebugAutoUnlockSec` in
 | Top bar | permanent by default (`barPinned`, reserves its 36 px); with `barPinned: false` it hides above the edge and the top edge reveals it; hover an item for its popout |
 | Pin the bar | Super+Shift+B or `qs -c onyx ipc call bar pin\|unpin\|toggle`; Esc unpins; Tab/Enter work while pinned |
 | Lock | `qs -c onyx ipc call lock lock`; global shortcut `onyx:lock` |
+| Wallpaper picker | Super+Shift+W or `qs -c onyx ipc call wallpaper toggle`: strip of sheared thumbnails; arrows/hjkl, Tab wraps, u/d page, Enter or click selects (`caelestia wallpaper -f`), Esc closes. `wallpaper.{dir,shown,height,shear,keepOpen}` in the config |
 | Restart everything | `desk-restart` (Hyprland reload + both shells; refuses while locked). No watchdog: if a shell dies, run this. |
 | Caelestia | dashboard/launcher/sidebar on their keybinds; its own bar (`bar.excludedScreens`) , the right-edge OSD (`osd.enabled: false`) and the sidebar hover (`sidebar.showOnHover: false`) are off, the tray lives in the top bar |
-| Settings | `~/.config/onyx/config.json` (watched): `reducedMotion`, `barPinned`, `updatesIntervalMin`, `updatesOnBattery`, `widgetsEnabled`, `widgets.*`, `perfCommand`, `updatesCommand`, `logoutCommand`, `trayHidden`, `lock.{hideNotifs,use24h,showWeather,showMedia,dotField}` |
+| Settings | `~/.config/onyx/config.json` (watched): `reducedMotion`, `barPinned`, `updatesIntervalMin`, `updatesOnBattery`, `wallpaper.*`, `widgetsEnabled`, `widgets.*`, `perfCommand`, `updatesCommand`, `logoutCommand`, `trayHidden`, `lock.{hideNotifs,use24h,showWeather,showMedia,dotField}` |
 
 Colours follow `~/.local/state/caelestia/scheme.json`, so `caelestia scheme set …` recolours the
 bar, lock, widgets, GTK, foot, btop and Hyprland together.

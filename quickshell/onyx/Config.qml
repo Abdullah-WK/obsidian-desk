@@ -25,6 +25,13 @@ Singleton {
     readonly property var logoutCommand: toCommand(data.logoutCommand ?? "loginctl terminate-session self")
     readonly property var trayHidden: Array.isArray(data.trayHidden) ? data.trayHidden : []
 
+    readonly property var wallpaperData: data.wallpaper ?? ({})
+    readonly property string wallpaperDir: (wallpaperData.dir || Quickshell.env("CAELESTIA_WALLPAPERS_DIR") || Quickshell.env("HOME") + "/Pictures/Wallpapers").replace(/^~/, Quickshell.env("HOME"))
+    readonly property int wallpaperShown: wallpaperData.shown ?? 6
+    readonly property int wallpaperHeight: wallpaperData.height ?? 420
+    readonly property real wallpaperShear: wallpaperData.shear ?? -0.25
+    readonly property bool wallpaperKeepOpen: wallpaperData.keepOpen ?? false
+
     readonly property bool lockHideNotifs: lockData.hideNotifs ?? false
     // null → follow the locale; true/false force 24 h / 12 h
     readonly property var lockUse24h: lockData.use24h ?? null

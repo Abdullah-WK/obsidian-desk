@@ -48,6 +48,8 @@ if lockVerified then
     hl.bind("SUPER + L", hl.dsp.exec_cmd("qs -c onyx ipc call lock lock"))
 end
 hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("qs -c onyx ipc call bar toggle"))
+-- Super+W is the dots' browser bind, so the picker takes Super+Shift+W
+hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("qs -c onyx ipc call wallpaper toggle"))
 
 -- Layer rules (Caelestia's own caelestia-* rules stay as the dots define them)
 hl.layer_rule({ match = { namespace = "onyx-hotzone" }, no_anim = true })

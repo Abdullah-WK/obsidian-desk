@@ -27,5 +27,12 @@
   },
   "lockDebugAutoUnlockSec": 30,
   "trayHidden": [],
-  "updatesOnBattery": false
+  "updatesOnBattery": false,
+  "wallpaper": {
+    "dir": "~/Pictures/Wallpapers",
+    "shown": 6,
+    "height": 420,
+    "shear": -0.25,
+    "keepOpen": false
+  }
 }
