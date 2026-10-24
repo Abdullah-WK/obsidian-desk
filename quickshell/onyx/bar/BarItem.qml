@@ -15,6 +15,7 @@ Item {
     default property alias content: inner.data
 
     readonly property bool hot: hh.hovered || activeFocus
+    readonly property bool open: host.openItem === root
     readonly property color ink: hot ? Scheme.fgSurface : Scheme.fgSurfaceVariant
 
     signal activated
@@ -32,11 +33,29 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: Theme.rChip
-        color: root.hot && root.interactive ? Scheme.surfaceContainer : "transparent"
+        color: root.open ? Scheme.surfaceContainerHigh : root.hot && root.interactive ? Scheme.surfaceContainer : "transparent"
 
         Behavior on color {
             ColorAnimation {
                 duration: Theme.popout
+            }
+        }
+    }
+
+    Rectangle {
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -4
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: root.open ? parent.width - 8 : 0
+        height: 2
+        radius: 1
+        color: Scheme.primary
+
+        Behavior on width {
+            NumberAnimation {
+                duration: Theme.morph
+                easing.type: Easing.BezierSpline
+                easing.bezierCurve: Theme.standard
             }
         }
     }

@@ -9,8 +9,13 @@ Item {
     property string label: ""
     property string value: ""
 
-    implicitHeight: 14
+    implicitHeight: 24
     width: parent.width
+
+    Hairline {
+        width: parent.width
+        anchors.bottom: parent.bottom
+    }
 
     Ink {
         text: root.label.toUpperCase()
@@ -19,7 +24,8 @@ Item {
         tracking: 0.12
         color: Scheme.outline
         anchors.left: parent.left
-        anchors.baseline: parent.bottom
+        anchors.baseline: parent.top
+        anchors.baselineOffset: 12
     }
     Ink {
         mono: true
@@ -27,6 +33,7 @@ Item {
         size: 10.5
         color: Scheme.fgSurfaceVariant
         anchors.right: parent.right
-        anchors.baseline: parent.bottom
+        anchors.baseline: parent.top
+        anchors.baselineOffset: 12
     }
 }

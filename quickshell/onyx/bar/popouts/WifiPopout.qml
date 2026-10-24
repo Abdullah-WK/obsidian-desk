@@ -137,6 +137,6 @@ Column {
     }
 
     PopCta {
-        text: "click a network to connect · password inline"
+        text: "click to connect · password inline"
     }
 }

@@ -179,6 +179,6 @@ Column {
     }
 
     PopCta {
-        text: "reboot and off need a 600 ms hold"
+        text: "hold reboot / off for 600 ms"
     }
 }

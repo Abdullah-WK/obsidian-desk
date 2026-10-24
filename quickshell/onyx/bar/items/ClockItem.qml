@@ -13,6 +13,7 @@ BarItem {
     popout: CalendarPopout {
         host: root.host
     }
+    contentSpacing: 8
 
     SystemClock {
         id: clock
@@ -26,6 +27,13 @@ BarItem {
         font.weight: 500
         tracking: 0.02
         color: root.ink
+        anchors.verticalCenter: parent.verticalCenter
+    }
+    Ink {
+        mono: true
+        text: "·  " + Qt.formatDate(clock.date, "ddd d MMM").toLowerCase()
+        size: Theme.barLabel
+        color: Scheme.outline
         anchors.verticalCenter: parent.verticalCenter
     }
 }

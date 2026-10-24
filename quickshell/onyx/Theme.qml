@@ -23,7 +23,7 @@ Singleton {
     // Radius
     readonly property int rChip: 3
     readonly property int rItem: 5
-    readonly property int rPanel: 7
+    readonly property int rPanel: 8
     readonly property int rWindow: 10
     readonly property int rFrame: 12
 
@@ -38,8 +38,8 @@ Singleton {
     readonly property real barText: 12.5
     readonly property real barLabel: 12
     readonly property int popoutGap: 9
-    readonly property int popoutMinWidth: 220
-    readonly property int popoutPadding: 12
+    readonly property int popoutMinWidth: 240
+    readonly property int popoutPadding: 14
     readonly property int popoutSpace: 520
     readonly property int hideOffset: barHeight + 6
 

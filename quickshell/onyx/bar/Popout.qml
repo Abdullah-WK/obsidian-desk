@@ -130,6 +130,15 @@ Item {
             }
         }
 
+        // 1 px inner highlight along the top edge (depth without shadows)
+        Rectangle {
+            x: 1
+            y: 1
+            width: parent.width - 2
+            height: 1
+            color: Scheme.alpha(Scheme.fgSurface, 0.05)
+        }
+
         Loader {
             id: loader
             x: Theme.popoutPadding

@@ -11,7 +11,7 @@ Column {
     property int keyWidth: 90
 
     width: parent.width
-    spacing: 4
+    spacing: 5
 
     Repeater {
         model: root.rows
@@ -20,7 +20,7 @@ Column {
             id: row
             required property var modelData
             width: root.width
-            implicitHeight: 15
+            implicitHeight: 16
 
             Ink {
                 mono: true

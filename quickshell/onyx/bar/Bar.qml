@@ -22,6 +22,7 @@ Scope {
     readonly property bool shown: !gameMode && (pinned || revealed)
     readonly property bool anyHover: hot.hovered || barHover.hovered || popout.hovered
     readonly property bool holding: anyHover || popout.open
+    readonly property var openItem: popout.item
 
     function reveal(): void {
         if (gameMode)
@@ -180,34 +181,48 @@ Scope {
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
+                // 1 px hairline between logical groups of the right cluster
+                component GroupSep: Rectangle {
+                    width: 1
+                    height: 14
+                    color: Scheme.outlineVariant
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
                 Row {
                     id: rightGroup
+                    readonly property bool trayVisible: children[0].visible
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.barPadding
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.itemGap
+                    spacing: Theme.s2
 
+                    TrayItem {
+                        host: root
+                    }
+                    GroupSep {
+                        visible: rightGroup.trayVisible
+                    }
                     PerfItem {
                         id: perfItem
                         host: root
                     }
-                    AudioItem {
-                        id: audioItem
+                    GroupSep {}
+                    WifiItem {
+                        id: wifiItem
                         host: root
                     }
                     BluetoothItem {
                         id: btItem
                         host: root
                     }
-                    WifiItem {
-                        id: wifiItem
+                    AudioItem {
+                        id: audioItem
                         host: root
                     }
+                    GroupSep {}
                     BatteryItem {
                         id: battItem
-                        host: root
-                    }
-                    TrayItem {
                         host: root
                     }
                     SessionItem {

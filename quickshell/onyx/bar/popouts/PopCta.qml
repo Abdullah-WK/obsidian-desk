@@ -12,7 +12,7 @@ Item {
     signal clicked
 
     width: parent.width
-    implicitHeight: 20
+    implicitHeight: 22
 
     Hairline {
         width: parent.width

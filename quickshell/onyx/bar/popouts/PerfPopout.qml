@@ -92,7 +92,7 @@ Column {
     }
 
     PopCta {
-        text: "click → " + Config.perfCommand.join(" ") + " · red over 85%"
+        text: "click → " + Config.perfCommand.slice(-1)[0] + " · red above 85%"
         clickable: true
         onClicked: {
             Quickshell.execDetached(Config.perfCommand);

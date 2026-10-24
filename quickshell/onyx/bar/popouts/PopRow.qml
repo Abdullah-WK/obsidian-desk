@@ -17,8 +17,8 @@ Rectangle {
     readonly property bool hot: hh.hovered && enabled
 
     width: parent.width
-    implicitHeight: 27
-    radius: Theme.rChip
+    implicitHeight: 30
+    radius: Theme.rItem
     color: selected ? Scheme.surfaceContainer : hot ? Scheme.alpha(Scheme.surfaceContainer, 0.6) : "transparent"
 
     Behavior on color {
@@ -37,7 +37,7 @@ Rectangle {
 
     Row {
         anchors.verticalCenter: parent.verticalCenter
-        x: 8
+        x: 10
         spacing: 10
 
         Icon {
