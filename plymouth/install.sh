@@ -21,20 +21,17 @@ if [ -f /etc/default/grub ] && ! grep -qE '^GRUB_CMDLINE_LINUX_DEFAULT=.*\bsplas
     grub-mkconfig -o /boot/grub/grub.cfg
     echo "grub: splash added to the kernel command line"
 fi
-# SDDM quits Plymouth itself with --retain-splash when the session starts; systemd's own quit unit
-# would kill the splash earlier and expose tty1 for a second or two.
-systemctl mask plymouth-quit.service plymouth-quit-wait.service 2>/dev/null && echo "plymouth-quit masked"
-# …and SDDM retires the splash itself just before it starts, retaining the last frame until the
-# compositor draws (works whether or not this SDDM build has native Plymouth support).
-install -d /etc/systemd/system/sddm.service.d
-cat > /etc/systemd/system/sddm.service.d/onyx-plymouth.conf <<'UNIT'
-[Unit]
-After=plymouth-start.service
-[Service]
-ExecStartPre=-/usr/bin/plymouth quit --retain-splash
-UNIT
-systemctl daemon-reload
-echo "sddm: plymouth quit --retain-splash before start (drop-in onyx-plymouth.conf)"
+# 2026-10-25: the earlier "retain splash" handover (masking plymouth-quit* and quitting Plymouth
+# from an sddm.service ExecStartPre) deadlocked the VT handoff on this machine: SDDM's X server on
+# VT 2 never came up and the boot sat on a blank screen. Stock Plymouth quit units are used; this
+# block undoes that handover wherever it was applied.
+if [ -e /etc/systemd/system/sddm.service.d/onyx-plymouth.conf ] || [ "$(systemctl is-enabled plymouth-quit.service 2>/dev/null)" = masked ]; then
+    systemctl unmask plymouth-quit.service plymouth-quit-wait.service 2>/dev/null || true
+    rm -f /etc/systemd/system/sddm.service.d/onyx-plymouth.conf
+    rmdir /etc/systemd/system/sddm.service.d 2>/dev/null || true
+    systemctl daemon-reload
+    echo "removed the retain-splash handover (plymouth-quit unmasked, sddm drop-in deleted)"
+fi
 # keep the console quiet behind the splash
 if [ -f /etc/default/grub ]; then
     for p in "vt.global_cursor_default=0" "systemd.show_status=auto" "rd.udev.log_level=3"; do
