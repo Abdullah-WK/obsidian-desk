@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Onyx
+Description=Near-black boot splash with the Arch mark and a hairline progress bar
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/onyx
+ScriptFile=/usr/share/plymouth/themes/onyx/onyx.script

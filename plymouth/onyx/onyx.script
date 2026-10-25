@@ -1,0 +1,63 @@
+# Onyx Plymouth theme: #09090b ground, Arch mark centred, 1 px hairline that fills with progress,
+# mono-ish message line for passwords and status.
+Window.SetBackgroundTopColor(0.035, 0.035, 0.043);
+Window.SetBackgroundBottomColor(0.035, 0.035, 0.043);
+
+screen_w = Window.GetWidth();
+screen_h = Window.GetHeight();
+
+logo.image = Image("logo.png");
+logo.sprite = Sprite(logo.image);
+logo.x = screen_w / 2 - logo.image.GetWidth() / 2;
+logo.y = screen_h / 2 - logo.image.GetHeight() / 2 - screen_h * 0.04;
+logo.sprite.SetPosition(logo.x, logo.y, 10);
+
+# hairline track + fill
+track_w = 240;
+track.image = Image("track.png").Scale(track_w, 1);
+track.sprite = Sprite(track.image);
+track.x = screen_w / 2 - track_w / 2;
+track.y = logo.y + logo.image.GetHeight() + screen_h * 0.06;
+track.sprite.SetPosition(track.x, track.y, 10);
+
+fill.image = Image("fill.png");
+fill.sprite = Sprite();
+fill.sprite.SetPosition(track.x, track.y, 11);
+
+fun progress_callback(duration, progress) {
+    w = Math.Int(track_w * progress);
+    if (w < 1) w = 1;
+    fill.sprite.SetImage(fill.image.Scale(w, 1));
+}
+Plymouth.SetBootProgressFunction(progress_callback);
+
+# status / password line
+message.sprite = Sprite();
+message.sprite.SetPosition(screen_w / 2, track.y + 28, 10);
+
+fun display_message_callback(text) {
+    img = Image.Text(text, 0.63, 0.63, 0.66, 1, "Inter 11");
+    message.sprite.SetImage(img);
+    message.sprite.SetPosition(screen_w / 2 - img.GetWidth() / 2, track.y + 28, 10);
+}
+Plymouth.SetDisplayMessageFunction(display_message_callback);
+
+bullets = "";
+fun display_password_callback(prompt, bullet_count) {
+    bullets = "";
+    for (i = 0; i < bullet_count; i++) bullets += "•";
+    img = Image.Text(prompt + "  " + bullets, 0.92, 0.92, 0.93, 1, "Inter 12");
+    message.sprite.SetImage(img);
+    message.sprite.SetPosition(screen_w / 2 - img.GetWidth() / 2, track.y + 28, 10);
+}
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+
+fun display_normal_callback() {
+    message.sprite.SetImage(Image.Text("", 0, 0, 0));
+}
+Plymouth.SetDisplayNormalFunction(display_normal_callback);
+
+fun quit_callback() {
+    logo.sprite.SetOpacity(1);
+}
+Plymouth.SetQuitFunction(quit_callback);
