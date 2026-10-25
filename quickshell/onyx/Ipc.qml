@@ -16,9 +16,10 @@ Scope {
     id: root
 
     required property Lock lock
-    required property WallpaperPicker wallpaper
-    required property SessionScreen session
-    required property Launcher launcher
+    // the rest of the shell loads after the lock at login; guard for null
+    property var wallpaper: null
+    property var session: null
+    property var launcher: null
 
     IpcHandler {
         target: "bar"
@@ -41,13 +42,13 @@ Scope {
         target: "wallpaper"
 
         function open(): void {
-            root.wallpaper.show();
+            root.wallpaper?.show();
         }
         function close(): void {
-            root.wallpaper.hide();
+            root.wallpaper?.hide();
         }
         function toggle(): void {
-            root.wallpaper.toggle();
+            root.wallpaper?.toggle();
         }
     }
 
@@ -55,13 +56,13 @@ Scope {
         target: "launcher"
 
         function open(): void {
-            root.launcher.show();
+            root.launcher?.show();
         }
         function close(): void {
-            root.launcher.hide();
+            root.launcher?.hide();
         }
         function toggle(): void {
-            root.launcher.toggle();
+            root.launcher?.toggle();
         }
     }
 
@@ -69,13 +70,13 @@ Scope {
         target: "session"
 
         function open(): void {
-            root.session.show();
+            root.session?.show();
         }
         function close(): void {
-            root.session.hide();
+            root.session?.hide();
         }
         function toggle(): void {
-            root.session.toggle();
+            root.session?.toggle();
         }
     }
 

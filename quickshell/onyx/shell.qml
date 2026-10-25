@@ -1,6 +1,11 @@
 //@ pragma Env QT_QUICK_CONTROLS_STYLE=Basic
-// Obsidian desk companion shell: top bar (per screen), lock, desktop widgets (per screen).
-// Run with `qs -c onyx`. IPC: `qs -c onyx ipc call bar pin|unpin|toggle`, `... lock lock|unlock|isLocked`.
+// Obsidian desk companion shell: top bar (per screen), lock, session screen, launcher,
+// wallpaper picker, notifications, desktop widgets (per screen). Run with `qs -c onyx`.
+// IPC: `qs -c onyx ipc call bar|lock|session|launcher|wallpaper …`.
+//
+// Login (ONYX_LOCK_ON_START=1, set by hypr-obsidian.lua once the lock is verified): the lock is
+// created and engaged before anything else loads, so the lock surface is the first frame; the
+// rest of the shell is brought up 400 ms later behind it.
 import QtQuick
 import Quickshell
 import qs
@@ -15,61 +20,74 @@ import qs.widgets
 ShellRoot {
     id: root
 
+    readonly property bool lockFirst: Quickshell.env("ONYX_LOCK_ON_START") === "1"
+    property bool restReady: !lockFirst
+
     Lock {
         id: sessionLock
+        Component.onCompleted: if (root.lockFirst) engage()
     }
 
-    // Login: hypr-obsidian.lua starts the shell with ONYX_LOCK_ON_START=1 once the lock is
-    // verified, so the lock is the first thing on screen (hypr-user.lua re-asserts it after).
     Timer {
-        running: Quickshell.env("ONYX_LOCK_ON_START") === "1"
-        interval: 150
-        onTriggered: sessionLock.engage()
-    }
-
-    WallpaperPicker {
-        id: wallpaperPicker
-    }
-
-    SessionScreen {
-        id: sessionScreen
-        lock: sessionLock
-    }
-
-    Popups {}
-
-    Launcher {
-        id: launcher
-        lock: sessionLock
-        session: sessionScreen
-        wallpaper: wallpaperPicker
+        running: root.lockFirst
+        interval: 400
+        onTriggered: root.restReady = true
     }
 
     Ipc {
         lock: sessionLock
-        wallpaper: wallpaperPicker
-        session: sessionScreen
-        launcher: launcher
+        wallpaper: rest.item ? rest.item.wallpaper : null
+        session: rest.item ? rest.item.session : null
+        launcher: rest.item ? rest.item.launcher : null
     }
 
-    Variants {
-        model: Quickshell.screens
+    Loader {
+        id: rest
+        active: root.restReady
 
-        Bar {
-            required property ShellScreen modelData
+        sourceComponent: Scope {
+            readonly property alias wallpaper: wallpaperPicker
+            readonly property alias session: sessionScreen
+            readonly property alias launcher: launcher
 
-            screen: modelData
-            lock: sessionLock
-        }
-    }
+            WallpaperPicker {
+                id: wallpaperPicker
+            }
 
-    Variants {
-        model: Quickshell.screens
+            SessionScreen {
+                id: sessionScreen
+                lock: sessionLock
+            }
 
-        Widgets {
-            required property ShellScreen modelData
+            Popups {}
 
-            screen: modelData
+            Launcher {
+                id: launcher
+                lock: sessionLock
+                session: sessionScreen
+                wallpaper: wallpaperPicker
+            }
+
+            Variants {
+                model: Quickshell.screens
+
+                Bar {
+                    required property ShellScreen modelData
+
+                    screen: modelData
+                    lock: sessionLock
+                }
+            }
+
+            Variants {
+                model: Quickshell.screens
+
+                Widgets {
+                    required property ShellScreen modelData
+
+                    screen: modelData
+                }
+            }
         }
     }
 }
