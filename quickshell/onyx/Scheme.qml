@@ -66,6 +66,8 @@ Singleton {
     readonly property color error: c("error")
     readonly property color fgError: c("onError")
     readonly property color success: c("success")
+    // fixed accents outside the scheme
+    readonly property color crimson: "#dc143c"
     // the one chromatic token of the Obsidian scheme; under any other scheme it follows primary
     readonly property color archIce: onyx ? "#8fb8d8" : primary
 

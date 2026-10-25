@@ -16,7 +16,14 @@ BarItem {
 
     Icon {
         text: "power_settings_new"
-        color: root.ink
+        weight: 500
+        color: root.hot ? "#ff3b5e" : Scheme.crimson
+
+        Behavior on color {
+            ColorAnimation {
+                duration: Theme.colour
+            }
+        }
         anchors.verticalCenter: parent.verticalCenter
     }
 }

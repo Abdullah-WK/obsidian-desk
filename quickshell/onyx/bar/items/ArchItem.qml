@@ -17,17 +17,25 @@ BarItem {
     onActivated: Quickshell.execDetached(["caelestia", "shell", "drawers", "toggle", "launcher"])
 
     Item {
-        width: 16
-        height: 16
+        width: 20
+        height: 20
         anchors.verticalCenter: parent.verticalCenter
 
         ArchGlyph {
-            size: 16
+            size: 20
+            iridescent: true
+            glow: root.hot ? 1 : 0.7
+
+            Behavior on glow {
+                NumberAnimation {
+                    duration: Theme.colour
+                }
+            }
         }
         // pending updates badge
         Rectangle {
             visible: Updates.count > 0
-            x: 11
+            x: 14
             y: -2
             width: 7
             height: 7
