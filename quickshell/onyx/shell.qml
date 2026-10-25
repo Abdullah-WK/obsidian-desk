@@ -17,6 +17,7 @@ import qs.launcher
 import qs.notifications
 import qs.widgets
 import qs.corners
+import qs.osd
 
 ShellRoot {
     id: root
@@ -61,6 +62,8 @@ ShellRoot {
             }
 
             Popups {}
+
+            Osd {}
 
             Launcher {
                 id: launcher

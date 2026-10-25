@@ -52,44 +52,10 @@ Column {
         onToggled: if (root.sink?.audio) root.sink.audio.muted = !root.sink.audio.muted
     }
 
-    Item {
-        id: slider
+    Slider {
         width: parent.width
-        implicitHeight: 14
-
-        Rectangle {
-            anchors.verticalCenter: parent.verticalCenter
-            width: parent.width
-            height: 4
-            radius: 2
-            color: Scheme.surfaceContainerHighest
-
-            Rectangle {
-                width: Math.round(root.volume * parent.width)
-                height: parent.height
-                radius: 2
-                color: Scheme.primary
-            }
-        }
-        Rectangle {
-            x: Math.round(root.volume * (parent.width - width))
-            anchors.verticalCenter: parent.verticalCenter
-            width: 10
-            height: 10
-            radius: 5
-            color: Scheme.primary
-        }
-        MouseArea {
-            anchors.fill: parent
-            onPressed: mouse => root.setVolume(mouse.x / width)
-            onPositionChanged: mouse => {
-                if (pressed)
-                    root.setVolume(mouse.x / width);
-            }
-        }
-        WheelHandler {
-            onWheel: event => root.setVolume(root.volume + (event.angleDelta.y > 0 ? 0.05 : -0.05))
-        }
+        value: root.volume
+        onMoved: v => root.setVolume(v)
     }
 
     Column {

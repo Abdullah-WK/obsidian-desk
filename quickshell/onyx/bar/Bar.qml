@@ -23,6 +23,7 @@ Scope {
     readonly property bool anyHover: hot.hovered || barHover.hovered || popout.hovered
     readonly property bool holding: anyHover || popout.open
     readonly property var openItem: popout.item
+    onOpenItemChanged: Runtime.popoutOpen = openItem !== null
 
     function reveal(): void {
         if (gameMode)
@@ -228,6 +229,10 @@ Scope {
                     }
                     AudioItem {
                         id: audioItem
+                        host: root
+                    }
+                    BrightnessItem {
+                        id: brightItem
                         host: root
                     }
                     GroupSep {}

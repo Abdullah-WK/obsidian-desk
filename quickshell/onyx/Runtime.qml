@@ -8,4 +8,6 @@ Singleton {
     id: root
 
     property bool barPinned: Config.barPinned
+    // any bar popout open on any screen (the OSD stays quiet while a popout slider is in use)
+    property bool popoutOpen: false
 }

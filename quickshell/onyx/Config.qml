@@ -28,6 +28,9 @@ Singleton {
     readonly property var trayHidden: Array.isArray(data.trayHidden) ? data.trayHidden : []
     readonly property int notifTimeoutMs: data.notifTimeoutMs ?? 5000
     readonly property int notifPopupsMax: data.notifPopupsMax ?? 3
+    readonly property var osdData: data.osd ?? ({})
+    readonly property bool osdEnabled: osdData.enabled ?? true
+    readonly property int osdHideMs: osdData.hideMs ?? 1500
 
     readonly property var wallpaperData: data.wallpaper ?? ({})
     readonly property string wallpaperDir: (wallpaperData.dir || Quickshell.env("CAELESTIA_WALLPAPERS_DIR") || Quickshell.env("HOME") + "/Pictures/Wallpapers").replace(/^~/, Quickshell.env("HOME"))
