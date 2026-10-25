@@ -1,86 +1,66 @@
 pragma ComponentBehavior: Bound
-// System tray (StatusNotifier): one 15 px icon per client. Left click activates, middle click
-// secondary-activates, right click opens the client's menu, scroll is forwarded.
-// Clients listed in Config.trayHidden are skipped. Hidden entirely when there is nothing to show.
+// System tray (StatusNotifier): one bar item per client with an onyx popout that renders the
+// client's own DBus menu (Discord: show, mute, deafen, quit …). Left click activates, middle
+// click secondary-activates, scroll is forwarded. Clients in Config.trayHidden are skipped.
 import QtQuick
 import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import qs
 import qs.bar
+import qs.bar.popouts
 
-BarItem {
+Row {
     id: root
+
+    required property var host
 
     readonly property var items: SystemTray.items.values.filter(i => !Config.trayHidden.some(h => (i.id || "").toLowerCase().includes(h.toLowerCase())))
 
     visible: items.length > 0
-    interactive: false
-    contentSpacing: 6
+    spacing: Theme.itemGap
+    anchors.verticalCenter: parent.verticalCenter
 
     Repeater {
         model: root.items
 
-        Item {
+        BarItem {
             id: entry
 
             required property SystemTrayItem modelData
 
-            width: Theme.iconSize + 6
-            height: Theme.itemHeight
-            anchors.verticalCenter: parent.verticalCenter
+            host: root.host
+            align: "right"
+            popout: modelData.hasMenu ? trayPopout : null
+            onActivated: {
+                if (entry.modelData.onlyMenu && entry.modelData.hasMenu)
+                    host.openPopout(entry);
+                else
+                    entry.modelData.activate();
+            }
+            onScrolled: delta => entry.modelData.scroll(delta, false)
 
-            Rectangle {
-                anchors.fill: parent
-                radius: Theme.rChip
-                color: hh.hovered ? Scheme.surfaceContainer : "transparent"
-
-                Behavior on color {
-                    ColorAnimation {
-                        duration: Theme.popout
-                    }
+            Component {
+                id: trayPopout
+                TrayPopout {
+                    host: entry.host
+                    item: entry.modelData
                 }
             }
 
             Loader {
-                anchors.centerIn: parent
                 active: entry.modelData.icon !== ""
+                anchors.verticalCenter: parent.verticalCenter
                 sourceComponent: IconImage {
                     implicitSize: Theme.iconSize
                     source: entry.modelData.icon
-                    opacity: hh.hovered ? 1 : 0.85
+                    opacity: entry.hot ? 1 : 0.85
                 }
             }
 
-            QsMenuAnchor {
-                id: menu
-                menu: entry.modelData.menu
-                anchor.item: entry
-                anchor.rect.y: entry.height + Theme.popoutGap
-            }
-
-            HoverHandler {
-                id: hh
-            }
-            TapHandler {
-                acceptedButtons: Qt.LeftButton
-                onTapped: {
-                    if (entry.modelData.onlyMenu && entry.modelData.hasMenu)
-                        menu.open();
-                    else
-                        entry.modelData.activate();
-                }
-            }
             TapHandler {
                 acceptedButtons: Qt.MiddleButton
                 onTapped: entry.modelData.secondaryActivate()
-            }
-            TapHandler {
-                acceptedButtons: Qt.RightButton
-                onTapped: if (entry.modelData.hasMenu) menu.open()
-            }
-            WheelHandler {
-                onWheel: event => entry.modelData.scroll(event.angleDelta.y, false)
             }
         }
     }
