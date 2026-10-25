@@ -23,6 +23,7 @@ Singleton {
     readonly property var perfCommand: toCommand(data.perfCommand ?? "foot -e btop")
     readonly property var updatesCommand: toCommand(data.updatesCommand ?? "foot -e paru")
     readonly property var logoutCommand: toCommand(data.logoutCommand ?? "loginctl terminate-session self")
+    readonly property var terminalCommand: toCommand(data.terminalCommand ?? "foot")
     readonly property var trayHidden: Array.isArray(data.trayHidden) ? data.trayHidden : []
     readonly property int notifTimeoutMs: data.notifTimeoutMs ?? 5000
     readonly property int notifPopupsMax: data.notifPopupsMax ?? 3

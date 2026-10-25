@@ -142,7 +142,15 @@ Scope {
         if (r.kind === "app") {
             usage[r.entry.id] = (usage[r.entry.id] || 0) + 1;
             usageFile.setText(JSON.stringify(usage));
-            r.entry.execute();
+            if (r.entry.runInTerminal) {
+                // DesktopEntry.execute() ignores Terminal=true; run it inside the configured terminal.
+                Quickshell.execDetached({
+                    command: Config.terminalCommand.concat(r.entry.command),
+                    workingDirectory: r.entry.workingDirectory || Quickshell.env("HOME")
+                });
+            } else {
+                r.entry.execute();
+            }
         } else if (r.kind === "action") {
             r.run();
         } else if (r.kind === "calc") {
