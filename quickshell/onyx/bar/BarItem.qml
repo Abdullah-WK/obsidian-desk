@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 // Tab focus (when the bar is pinned) opens the popout, Enter activates.
 import QtQuick
 import qs
+import qs.components
 
 Item {
     id: root
@@ -49,7 +50,7 @@ Item {
         width: root.open ? parent.width - 8 : 0
         height: 2
         radius: 1
-        color: Scheme.primary
+        gradient: Sweep {}
 
         Behavior on width {
             NumberAnimation {

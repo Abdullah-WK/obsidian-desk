@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Hyprland
 import qs
 import qs.bar
+import qs.components
 
 BarItem {
     id: root
@@ -70,7 +71,13 @@ BarItem {
                     width: parent.width
                     height: 8
                     radius: 2
-                    color: square.active ? Scheme.primary : square.occupied ? Scheme.fgSurfaceVariant : Scheme.outlineVariant
+                    color: square.occupied ? Scheme.fgSurfaceVariant : Scheme.outlineVariant
+                    // the active square carries the iridescent sweep
+                    gradient: square.active ? sweep : null
+
+                    Sweep {
+                        id: sweep
+                    }
 
                     Behavior on color {
                         ColorAnimation {

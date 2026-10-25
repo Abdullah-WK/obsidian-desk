@@ -21,6 +21,7 @@ quickshell/onyx/                                   # → ~/.config/quickshell/on
 onyx/config.json                                   # → ~/.config/onyx/config.json  (user settings, see below)
 hypr/obsidian.lua  hypr/hypr-vars.lua  hypr/hypr-user.lua   # → ~/.config/caelestia/ (Lua dots); hypr/obsidian.conf for classic configs
 thunar/apply.sh                                    # xfconf: details view, hidden menubar (Ctrl+M), location entry, thumbnails (tumbler)
+firefox/userChrome.css  firefox/apply.sh          # scheme-rendered browser chrome, linked into every Firefox profile (restart Firefox)
 terminal/                                          # fish user-config (fzf keys, bat, h <cmd>), scheme templates for fzf/starship, foot tweaks
 ```
 

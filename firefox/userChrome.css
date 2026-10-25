@@ -1,0 +1,70 @@
+/* Obsidian Firefox chrome. Caelestia user template → ~/.local/state/caelestia/theme/firefox-userChrome.css,
+   symlinked from <profile>/chrome/userChrome.css. Needs toolkit.legacyUserProfileCustomizations.stylesheets = true.
+   Scope: tab strip, navigation bar, URL bar, sidebar, bookmarks bar, popups. Page content is untouched. */
+:root {
+  --onyx-bg: #{{ background.hex }};
+  --onyx-low: #{{ surfaceContainerLow.hex }};
+  --onyx-cont: #{{ surfaceContainer.hex }};
+  --onyx-high: #{{ surfaceContainerHigh.hex }};
+  --onyx-line: #{{ outlineVariant.hex }};
+  --onyx-outline: #{{ outline.hex }};
+  --onyx-fg: #{{ onSurface.hex }};
+  --onyx-fgv: #{{ onSurfaceVariant.hex }};
+  --onyx-primary: #{{ primary.hex }};
+
+  --toolbar-bgcolor: var(--onyx-bg) !important;
+  --toolbar-color: var(--onyx-fg) !important;
+  --toolbarbutton-icon-fill: var(--onyx-fgv) !important;
+  --toolbarbutton-hover-background: var(--onyx-cont) !important;
+  --toolbarbutton-active-background: var(--onyx-high) !important;
+  --toolbar-field-background-color: var(--onyx-low) !important;
+  --toolbar-field-color: var(--onyx-fg) !important;
+  --toolbar-field-border-color: var(--onyx-line) !important;
+  --toolbar-field-focus-background-color: var(--onyx-low) !important;
+  --toolbar-field-focus-border-color: var(--onyx-outline) !important;
+  --toolbar-field-focus-color: var(--onyx-fg) !important;
+  --urlbar-box-bgcolor: var(--onyx-low) !important;
+  --urlbar-box-hover-bgcolor: var(--onyx-cont) !important;
+  --urlbar-box-active-bgcolor: var(--onyx-high) !important;
+  --urlbar-box-text-color: var(--onyx-fgv) !important;
+  --tab-selected-bgcolor: var(--onyx-cont) !important;
+  --tab-selected-textcolor: var(--onyx-fg) !important;
+  --tab-hover-background-color: var(--onyx-low) !important;
+  --lwt-accent-color: var(--onyx-bg) !important;
+  --lwt-text-color: var(--onyx-fg) !important;
+  --arrowpanel-background: var(--onyx-low) !important;
+  --arrowpanel-color: var(--onyx-fg) !important;
+  --arrowpanel-border-color: var(--onyx-line) !important;
+  --panel-separator-color: var(--onyx-line) !important;
+  --sidebar-background-color: var(--onyx-bg) !important;
+  --sidebar-text-color: var(--onyx-fg) !important;
+  --sidebar-border-color: var(--onyx-line) !important;
+  --focus-outline-color: var(--onyx-primary) !important;
+  --toolbar-field-focus-outline-color: transparent !important;
+}
+#navigator-toolbox, #TabsToolbar, #nav-bar, #PersonalToolbar, #titlebar {
+  background: var(--onyx-bg) !important;
+  color: var(--onyx-fg) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+#nav-bar { border-bottom: 1px solid var(--onyx-line) !important; }
+.tabbrowser-tab { font: 500 12.5px Inter, sans-serif !important; }
+.tab-background { border-radius: 5px 5px 0 0 !important; box-shadow: none !important; }
+.tabbrowser-tab[selected] .tab-background { background: var(--onyx-cont) !important; box-shadow: inset 0 2px 0 var(--onyx-primary) !important; }
+.tabbrowser-tab:not([selected]) .tab-background { background: transparent !important; }
+.tabbrowser-tab:not([selected]) .tab-label { color: var(--onyx-fgv) !important; }
+#urlbar-background, #searchbar {
+  background: var(--onyx-low) !important;
+  border: 1px solid var(--onyx-line) !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+}
+#urlbar[focused] #urlbar-background { border-color: var(--onyx-outline) !important; }
+#urlbar-input, #urlbar .urlbar-input { font: 12.5px "JetBrainsMono Nerd Font", monospace !important; color: var(--onyx-fg) !important; }
+.urlbarView { background: var(--onyx-low) !important; color: var(--onyx-fg) !important; }
+.urlbarView-row[selected] > .urlbarView-row-inner { background: var(--onyx-cont) !important; box-shadow: inset 2px 0 0 var(--onyx-primary) !important; }
+#sidebar-box, #sidebar-header { background: var(--onyx-bg) !important; color: var(--onyx-fg) !important; }
+#PersonalToolbar .toolbarbutton-1 { color: var(--onyx-fgv) !important; }
+.panel-arrowcontent, menupopup { background: var(--onyx-low) !important; color: var(--onyx-fg) !important; border: 1px solid var(--onyx-line) !important; border-radius: 8px !important; }
+menuitem:hover, menu:hover, .subviewbutton:hover { background: var(--onyx-cont) !important; color: var(--onyx-fg) !important; }

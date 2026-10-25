@@ -63,6 +63,7 @@ mkdir -p "$CAE/templates" "$CAE/hooks"
 backup "$CAE/templates/gtk.css"; install -m644 "$HERE/caelestia/templates/gtk.css" "$CAE/templates/gtk.css"; ok "templates/gtk.css"
 backup "$CAE/hooks/post-scheme.sh"; install -m755 "$HERE/caelestia/hooks/post-scheme.sh" "$CAE/hooks/post-scheme.sh"; ok "hooks/post-scheme.sh"
 backup "$CAE/templates/fzf.fish"; install -m644 "$HERE/terminal/fzf.fish" "$CAE/templates/fzf.fish"
+backup "$CAE/templates/firefox-userChrome.css"; install -m644 "$HERE/firefox/userChrome.css" "$CAE/templates/firefox-userChrome.css"
 backup "$CAE/templates/starship.toml"; install -m644 "$HERE/terminal/starship.toml" "$CAE/templates/starship.toml"
 backup "$CAE/user-config.fish"; install -m644 "$HERE/terminal/user-config.fish" "$CAE/user-config.fish"; ok "terminal: fzf/starship templates + user-config.fish"
 bash "$HERE/terminal/foot-apply.sh" >/dev/null && ok "foot.ini: opaque, pointer hides while typing"
@@ -115,6 +116,7 @@ if command -v papirus-folders >/dev/null 2>&1; then
     [ "$cur" = grey ] && ok "Papirus folders grey" || todo "sudo papirus-folders -C grey --theme Papirus-Dark"
 fi
 bash "$HERE/thunar/apply.sh" >/dev/null && ok "thunar xfconf applied"
+bash "$HERE/firefox/apply.sh" >/dev/null 2>&1 && ok "firefox: userChrome linked (restart Firefox)" || note "firefox: no profiles found"
 
 # 8 ─ companion config -----------------------------------------------------------------------
 step "8 companion quickshell config"
