@@ -51,6 +51,16 @@ hl.animation({ leaf = "layersOut",   enabled = true, speed = 2,   bezier = "obsi
 -- Unfocused windows recede slightly (redraws only on focus change)
 hl.config({ decoration = { dim_inactive = true, dim_strength = 0.08 } })
 
+-- Diagnostics (2026-10-26, after an unexplained "Hyprland died"): keep Hyprland's own log on
+-- (default off) and mirror it + SDDM's session log to ~/.local/state/hyprland/ (last 6 sessions),
+-- since both originals vanish at logout. `hyprland-current.log` / `session-current.log` point at
+-- this session. Costs a few MB per session; drop this block once things are stable.
+hl.config({ debug = { disable_logs = false } })
+hl.on("hyprland.start", function()
+    hl.exec_cmd(home .. "/.local/bin/hypr-logmirror")
+end)
+
+
 -- Binds
 if lockVerified then
     hl.bind("SUPER + L", hl.dsp.exec_cmd("qs -c onyx ipc call lock lock"))

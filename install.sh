@@ -153,6 +153,7 @@ if [ -e "$CFG/hypr/hyprland.lua" ]; then
         else ok "$CAE/$f unchanged"; fi
     done
     backup "$CAE/hypr-obsidian.lua"; install -m644 "$HERE/hypr/obsidian.lua" "$CAE/hypr-obsidian.lua"; ok "$CAE/hypr-obsidian.lua (required from hypr-user.lua)"
+    install -Dm755 "$HERE/hypr/logmirror.sh" "$HOME/.local/bin/hypr-logmirror"; ok "~/.local/bin/hypr-logmirror"
     # HyprMod writes ~/.config/hypr/hyprland-gui.lua and hyprland.lua requires it LAST, so any
     # rounding/border/gaps it contains silently override hypr-vars.lua. Keep only misc.vrr.
     gui="$CFG/hypr/hyprland-gui.lua"
