@@ -20,6 +20,7 @@ for f in shell.json cli.json hypr-vars.lua hypr-user.lua hypr-obsidian.lua templ
     restore "$CAE/$f"
 done
 for v in gtk-3.0 gtk-4.0; do restore "$CFG/$v/gtk.css"; restore "$CFG/$v/thunar.css"; done
+python3 "$HERE/caelestia/override/patch-notifs.py" --undo
 rm -rf "$CFG/quickshell/onyx"; ok "removed $CFG/quickshell/onyx"
 rm -rf "$ONYX_CFG"; ok "removed $ONYX_CFG"
 if [ -e "$BK/scheme-before.json" ]; then

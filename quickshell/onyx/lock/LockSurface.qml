@@ -1154,36 +1154,9 @@ FocusScope {
     readonly property bool charging: battery ? (battery.state === UPowerDeviceState.Charging || battery.state === UPowerDeviceState.FullyCharged) : false
     readonly property bool lowBattery: battPct < 0.15 && !charging
 
-    property var notifs: []
+    readonly property var notifs: Notifs.list.slice(0, 4)
 
     function age(iso: string): string {
-        const t = new Date(iso).getTime();
-        if (isNaN(t))
-            return "";
-        const m = Math.floor((Date.now() - t) / 60000);
-        if (m < 1)
-            return "now";
-        if (m < 60)
-            return m + "m";
-        const h = Math.floor(m / 60);
-        if (h < 24)
-            return h + "h";
-        return Math.floor(h / 24) + "d";
-    }
-
-    FileView {
-        path: `${Quickshell.env("XDG_STATE_HOME") || Quickshell.env("HOME") + "/.local/state"}/caelestia/notifs.json`
-        watchChanges: true
-        printErrors: false
-        onFileChanged: reload()
-        onLoadFailed: root.notifs = []
-        onLoaded: {
-            try {
-                const list = JSON.parse(text());
-                root.notifs = Array.isArray(list) ? list.slice().sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 4) : [];
-            } catch (e) {
-                root.notifs = [];
-            }
-        }
+        return Notifs.age(iso);
     }
 }

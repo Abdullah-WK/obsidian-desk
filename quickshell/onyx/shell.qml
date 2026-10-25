@@ -9,6 +9,7 @@ import qs.lock
 import qs.wallpaper
 import qs.session
 import qs.launcher
+import qs.notifications
 import qs.widgets
 
 ShellRoot {
@@ -34,6 +35,8 @@ ShellRoot {
         id: sessionScreen
         lock: sessionLock
     }
+
+    Popups {}
 
     Launcher {
         id: launcher

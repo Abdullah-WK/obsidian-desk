@@ -160,6 +160,11 @@ else
     note "classic hyprland.conf detected: add 'source = $HERE/hypr/obsidian.conf' to ~/.config/hypr/hyprland.conf"
 fi
 
+# 9b ─ notifications: onyx is the daemon; Caelestia's server must not register --------------
+step "9b notifications"
+python3 "$HERE/caelestia/override/patch-notifs.py" && ok "Caelestia notification server disabled (onyx owns org.freedesktop.Notifications)"
+note "restart Caelestia once after this step: desk-restart"
+
 # 10 ─ start the companion ------------------------------------------------------------------
 step "10 start"
 install -Dm755 "$HERE/desk-restart.sh" "$HOME/.local/bin/desk-restart" && ok "desk-restart → ~/.local/bin/desk-restart"
