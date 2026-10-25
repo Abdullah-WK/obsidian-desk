@@ -23,7 +23,8 @@ return {
     windowRounding             = 10,
     windowRoundingPower        = 2,
     windowBorderSize           = 1,
-    activeWindowBorderColour   = "rgba(" .. scheme.outlineVariant .. "ff)",
+    -- focused window reads as focused: primary at 60 %; unfocused stays a quiet container grey
+    activeWindowBorderColour   = "rgba(" .. scheme.primary .. "99)",
     inactiveWindowBorderColour = "rgba(" .. scheme.surfaceContainerHigh .. "ff)",
 
     -- Caelestia's own lock keeps a key, but moves off Super+L once the companion lock owns it

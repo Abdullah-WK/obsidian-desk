@@ -325,11 +325,13 @@ FocusScope {
                 fromX: -22
                 fromY: 0
                 delay: 460
-                visible: Config.lockShowMedia
                 width: parent.width
 
                 readonly property MprisPlayer player: Mpris.players.values.find(p => p.isPlaying) ?? (Mpris.players.values.length > 0 ? Mpris.players.values[0] : null)
                 readonly property bool has: player !== null
+                // only while a player exists; otherwise the column is weather · fetch · swatches
+                visible: Config.lockShowMedia && has
+                height: visible ? implicitHeight : 0
 
                 Timer {
                     running: mediaBlock.has && mediaBlock.player.isPlaying && !root.idle
