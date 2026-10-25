@@ -1,8 +1,8 @@
-// "class · title" 11 px: class onSurfaceVariant, title onSurface, title elides in the middle.
+// Focused window: app icon + title (the icon already says which app). Titles elide in the
+// middle past ~48 characters; an empty workspace reads "Desktop" in onSurfaceVariant.
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Widgets
 import qs
 import qs.bar
 import qs.components
@@ -10,46 +10,37 @@ import qs.components
 BarItem {
     id: root
 
-    property real maxWidth: 360
+    property real maxWidth: 320
 
     readonly property HyprlandToplevel toplevel: Hyprland.activeToplevel
     readonly property string appClass: toplevel ? (toplevel.wayland?.appId || toplevel.lastIpcObject?.class || "") : ""
     readonly property string title: toplevel?.title ?? ""
-    // icon themes name app icons after the app id / class in nearly every case; fall back to the desktop entry
-    readonly property var entry: appClass ? (DesktopEntries.heuristicLookup(appClass) ?? DesktopEntries.byId(appClass)) : null
-    readonly property string iconName: entry?.icon ? entry.icon : appClass.toLowerCase()
-    readonly property string iconSource: appClass ? Quickshell.iconPath(iconName, "application-x-executable") : ""
+    readonly property bool empty: toplevel === null || (appClass === "" && title === "")
 
-    visible: toplevel !== null && (appClass !== "" || title !== "")
     contentSpacing: 0
 
-    Loader {
-        active: root.iconSource !== ""
-        visible: active
+    AppIcon {
+        appClass: root.empty ? "" : root.appClass
         anchors.verticalCenter: parent.verticalCenter
-        sourceComponent: IconImage {
-            implicitSize: 16
-            source: root.iconSource
-        }
     }
     Item {
-        visible: root.iconSource !== ""
+        visible: !root.empty && root.appClass !== ""
         width: 8
         height: 1
     }
     Ink {
-        text: root.appClass + (root.title ? " · " : "")
+        text: root.empty ? "Desktop" : (root.title || root.appClass)
         size: Theme.barText
-        color: Scheme.fgSurfaceVariant
-        anchors.verticalCenter: parent.verticalCenter
-    }
-    Ink {
-        text: root.title
-        size: Theme.barText
-        font.weight: 500
-        color: Scheme.fgSurface
+        font.weight: root.empty ? 400 : 500
+        color: root.empty ? Scheme.fgSurfaceVariant : Scheme.fgSurface
         elide: Text.ElideMiddle
         width: Math.min(implicitWidth, root.maxWidth)
         anchors.verticalCenter: parent.verticalCenter
+
+        Behavior on color {
+            ColorAnimation {
+                duration: Theme.colour
+            }
+        }
     }
 }

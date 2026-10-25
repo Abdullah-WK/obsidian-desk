@@ -26,6 +26,7 @@ Singleton {
     readonly property int rPanel: 8
     readonly property int rWindow: 10
     readonly property int rFrame: 12
+    readonly property int rScreen: 16   // rounded screen corners (corners/Corners.qml)
 
     // Bar geometry (§6.2)
     // one step up from the spec's 32/24/15 so the bar reads easily; popouts keep their sizes

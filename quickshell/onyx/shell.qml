@@ -16,6 +16,7 @@ import qs.session
 import qs.launcher
 import qs.notifications
 import qs.widgets
+import qs.corners
 
 ShellRoot {
     id: root
@@ -76,6 +77,16 @@ ShellRoot {
 
                     screen: modelData
                     lock: sessionLock
+                }
+            }
+
+            Variants {
+                model: Quickshell.screens
+
+                Corners {
+                    required property ShellScreen modelData
+
+                    screen: modelData
                 }
             }
 

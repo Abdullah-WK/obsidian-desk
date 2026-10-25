@@ -1,6 +1,8 @@
 pragma ComponentBehavior: Bound
-// Workspaces of this monitor: 5 shown, 7×7 squares r 2; occupied onSurfaceVariant,
-// active primary 14×7, empty outlineVariant. Scroll switches.
+// Workspaces of this monitor: a fixed window of 5 pips (shifts when the active workspace is
+// past it). Empty: 6×6 square outlineVariant. Occupied: the app icon of a window on that
+// workspace (monochrome under Graphite). Active: iridescent sweep — a 16×6 pill when empty, a
+// 2 px underline below the icon when occupied. Scroll switches, tap focuses.
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
@@ -15,17 +17,12 @@ BarItem {
 
     readonly property HyprlandMonitor monitor: Hyprland.monitorFor(screen)
     readonly property int activeId: monitor?.activeWorkspace?.id ?? 1
-    readonly property int maxShown: 5
-    // last occupied workspace id (within the window) → trailing empty squares are hidden
-    readonly property int lastOccupied: Hyprland.workspaces.values.reduce((m, w) => (w.id > 0 && (w.lastIpcObject?.windows ?? 0) > 0 && w.id > m) ? w.id : m, 0)
-    readonly property int first: activeId > maxShown ? activeId - maxShown + 1 : 1
-    readonly property int shown: Math.max(1, Math.min(maxShown, Math.max(activeId, lastOccupied) - first + 1))
+    readonly property int count: 5
+    readonly property int first: activeId > count ? activeId - count + 1 : 1
 
     interactive: false
-    contentSpacing: 5
-    implicitWidth: implicitContentWidth + 16
-
-    readonly property real implicitContentWidth: squares.implicitWidth
+    contentSpacing: 0
+    implicitWidth: pips.implicitWidth + 16
 
     function focusWorkspace(id: int): void {
         Hyprland.dispatch(Hyprland.usingLua ? `hl.dsp.focus({ workspace = "${id}" })` : `workspace ${id}`);
@@ -38,56 +35,93 @@ BarItem {
     }
 
     Row {
-        id: squares
-        spacing: 6
+        id: pips
+        spacing: 4
         anchors.verticalCenter: parent.verticalCenter
 
         Repeater {
-            model: root.shown
+            model: root.count
 
             Item {
-                id: square
+                id: pip
 
                 required property int index
                 readonly property int wsId: root.first + index
                 readonly property HyprlandWorkspace ws: Hyprland.workspaces.values.find(w => w.id === wsId) ?? null
                 readonly property bool active: root.activeId === wsId
-                readonly property bool occupied: ws ? (ws.lastIpcObject?.windows ?? 0) > 0 : false
+                readonly property var windows: ws ? (ws.toplevels?.values ?? []) : []
+                readonly property bool occupied: windows.length > 0
+                // prefer the focused window of that workspace, else its first one
+                readonly property var lead: windows.find(t => t.activated) ?? windows[0] ?? null
+                readonly property string appClass: lead ? (lead.wayland?.appId || lead.lastIpcObject?.class || "") : ""
 
-                // full item height as the hit area; the 8 px square sits in the middle
-                width: active ? 16 : 8
+                width: 18
                 height: Theme.itemHeight
 
-                Behavior on width {
-                    NumberAnimation {
-                        duration: Theme.colour
-                        easing.type: Easing.BezierSpline
-                        easing.bezierCurve: Theme.standard
+                // empty square ↔ active pill
+                Rectangle {
+                    anchors.centerIn: parent
+                    visible: !pip.occupied
+                    width: pip.active ? 16 : 6
+                    height: 6
+                    radius: 2
+                    color: Scheme.outlineVariant
+                    gradient: pip.active ? pillSweep : null
+
+                    Sweep {
+                        id: pillSweep
+                    }
+
+                    Behavior on width {
+                        NumberAnimation {
+                            duration: Theme.colour
+                            easing.type: Easing.BezierSpline
+                            easing.bezierCurve: Theme.standard
+                        }
                     }
                 }
 
-                Rectangle {
+                // occupied: app icon, dimmed unless active
+                AppIcon {
                     anchors.centerIn: parent
-                    width: parent.width
-                    height: 8
-                    radius: 2
-                    color: square.occupied ? Scheme.fgSurfaceVariant : Scheme.outlineVariant
-                    // the active square carries the iridescent sweep
-                    gradient: square.active ? sweep : null
+                    anchors.verticalCenterOffset: pip.active ? -1 : 0
+                    visible: pip.occupied
+                    appClass: pip.appClass
+                    implicitSize: 15
+                    opacity: pip.active ? 1 : 0.55
 
-                    Sweep {
-                        id: sweep
-                    }
-
-                    Behavior on color {
-                        ColorAnimation {
+                    Behavior on opacity {
+                        NumberAnimation {
                             duration: Theme.colour
                         }
                     }
                 }
 
+                // active + occupied: sweep underline, like an open bar item
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 3
+                    width: pip.active && pip.occupied ? 14 : 0
+                    height: 2
+                    radius: 1
+                    gradient: underlineSweep
+
+                    Sweep {
+                        id: underlineSweep
+                    }
+
+                    Behavior on width {
+                        NumberAnimation {
+                            duration: Theme.colour
+                            easing.type: Easing.BezierSpline
+                            easing.bezierCurve: Theme.standard
+                        }
+                    }
+                }
+
                 TapHandler {
-                    onTapped: root.focusWorkspace(square.wsId)
+                    onTapped: root.focusWorkspace(pip.wsId)
                 }
             }
         }

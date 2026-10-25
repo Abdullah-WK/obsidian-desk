@@ -13,6 +13,7 @@ Singleton {
 
     readonly property bool reducedMotion: data.reducedMotion ?? false
     readonly property bool barPinned: data.barPinned ?? false
+    readonly property bool screenCorners: data.screenCorners ?? true
     readonly property int updatesIntervalMin: Math.max(1, data.updatesIntervalMin ?? 60)
     readonly property bool updatesOnBattery: data.updatesOnBattery ?? false
     readonly property bool widgetsEnabled: data.widgetsEnabled ?? true
