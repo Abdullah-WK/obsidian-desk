@@ -14,7 +14,7 @@ BarItem {
     popout: ArchPopout {
         host: root.host
     }
-    onActivated: Quickshell.execDetached(["caelestia", "shell", "drawers", "toggle", "launcher"])
+    onActivated: Quickshell.execDetached(["qs", "-c", "onyx", "ipc", "call", "launcher", "toggle"])
 
     Item {
         width: 20

@@ -2,6 +2,7 @@
 //              `qs -c onyx ipc call lock lock|unlock|isLocked`
 //              `qs -c onyx ipc call wallpaper open|close|toggle`
 //              `qs -c onyx ipc call session open|close|toggle`
+//              `qs -c onyx ipc call launcher open|close|toggle`
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -9,6 +10,7 @@ import qs
 import qs.lock
 import qs.wallpaper
 import qs.session
+import qs.launcher
 
 Scope {
     id: root
@@ -16,6 +18,7 @@ Scope {
     required property Lock lock
     required property WallpaperPicker wallpaper
     required property SessionScreen session
+    required property Launcher launcher
 
     IpcHandler {
         target: "bar"
@@ -45,6 +48,20 @@ Scope {
         }
         function toggle(): void {
             root.wallpaper.toggle();
+        }
+    }
+
+    IpcHandler {
+        target: "launcher"
+
+        function open(): void {
+            root.launcher.show();
+        }
+        function close(): void {
+            root.launcher.hide();
+        }
+        function toggle(): void {
+            root.launcher.toggle();
         }
     }
 

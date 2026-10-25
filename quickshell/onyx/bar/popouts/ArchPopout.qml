@@ -19,7 +19,7 @@ Column {
 
     PopoutHeader {
         label: "launcher"
-        value: "super"
+        value: "tap super"
     }
     Column {
         width: parent.width
@@ -27,7 +27,7 @@ Column {
         PopRow {
             icon: "search"
             text: "Apps, actions, calc"
-            onClicked: root.run(["caelestia", "shell", "drawers", "toggle", "launcher"])
+            onClicked: root.run(["qs", "-c", "onyx", "ipc", "call", "launcher", "open"])
         }
         PopRow {
             icon: "image"

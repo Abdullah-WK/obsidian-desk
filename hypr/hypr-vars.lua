@@ -31,4 +31,6 @@ return {
     kbLock                     = lockVerified and "SUPER + CTRL + L" or "SUPER + L",
     -- Caelestia's session drawer moves off Ctrl+Alt+Del; the onyx session screen owns it and Super+Esc
     kbSession                  = "SUPER + CTRL + Delete",
+    -- the onyx launcher owns the Super tap; Caelestia's launcher stays on Super+Ctrl+Space
+    kbLauncher                 = "SUPER + CTRL + Space",
 }

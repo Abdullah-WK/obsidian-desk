@@ -61,6 +61,7 @@ the companion lock with a 30 s debug auto-unlock (`lockDebugAutoUnlockSec` in
 | Pin the bar | Super+Shift+B or `qs -c onyx ipc call bar pin\|unpin\|toggle`; Esc unpins; Tab/Enter work while pinned |
 | Lock | `qs -c onyx ipc call lock lock`; global shortcut `onyx:lock` |
 | Wallpaper picker | Super+Shift+W or `qs -c onyx ipc call wallpaper toggle`: strip of sheared thumbnails; arrows/hjkl, Tab wraps, u/d page, Enter or click selects (`caelestia wallpaper -f`), Esc closes. `wallpaper.{dir,shown,height,shear,keepOpen}` in the config |
+| Launcher | tap Super (or `qs -c onyx ipc call launcher toggle`, or the Arch glyph): apps · `>` actions · `=` calculator; ↑↓/Tab, Enter, Esc; most-used apps first (`~/.config/onyx/launcher-usage.json`). Caelestia's launcher stays on Super+Ctrl+Space |
 | Session screen | Super+Esc or Ctrl+Alt+Del (`qs -c onyx ipc call session toggle`): full-screen lock-style screen with lock · sleep · log out · reboot · power off; ←/→, Enter, letters l s o r p, hold for reboot/off, Esc back |
 | Restart everything | `desk-restart` (Hyprland reload + both shells; refuses while locked). No watchdog: if a shell dies, run this. |
 | Caelestia | dashboard/launcher/sidebar on their keybinds; its own bar (`bar.excludedScreens`) , the right-edge OSD (`osd.enabled: false`) and the sidebar hover (`sidebar.showOnHover: false`) are off, the tray lives in the top bar |
