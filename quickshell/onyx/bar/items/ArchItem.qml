@@ -24,13 +24,6 @@ BarItem {
         ArchGlyph {
             size: 20
             iridescent: true
-            glow: root.hot ? 1 : 0.7
-
-            Behavior on glow {
-                NumberAnimation {
-                    duration: Theme.colour
-                }
-            }
         }
         // pending updates badge
         Rectangle {

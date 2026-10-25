@@ -123,7 +123,10 @@ Scope {
                     function goToCurrent(): void {
                         const i = root.files.indexOf(root.current);
                         selectedIndex = i >= 0 ? i : 0;
+                        list.highlightMoveDuration = 0;
+                        list.currentIndex = selectedIndex;
                         list.positionViewAtIndex(selectedIndex, ListView.Center);
+                        list.highlightMoveDuration = Theme.d(260);
                     }
 
                     function clamp(i: int): int {
@@ -135,9 +138,10 @@ Scope {
                         return n > 0 ? ((i % n) + n) % n : 0;
                     }
 
+                    // the selection stays centred; the strip moves under it
                     function move(i: int): void {
                         selectedIndex = clamp(i);
-                        list.positionViewAtIndex(selectedIndex, ListView.Contain);
+                        list.currentIndex = selectedIndex;
                     }
 
                     function activate(): void {
@@ -163,12 +167,16 @@ Scope {
                         clip: true
                         model: root.files
                         cacheBuffer: Math.max(0, width)
-                        // room for the shear on the open side; a strip shorter than the view is centred
-                        readonly property real estimated: count * (strip.tileW + spacing) - spacing
-                        leftMargin: Math.max(strip.shear < 0 ? strip.shearOffset : 0, (width - estimated - strip.shearOffset) / 2)
-                        rightMargin: strip.shear > 0 ? strip.shearOffset : 0
+                        // carousel: the current tile is held in the middle of the view, the rest scrolls
+                        leftMargin: (width - strip.tileW) / 2
+                        rightMargin: (width - strip.tileW) / 2
+                        preferredHighlightBegin: (width - strip.tileW) / 2
+                        preferredHighlightEnd: (width + strip.tileW) / 2
+                        highlightRangeMode: ListView.StrictlyEnforceRange
+                        highlightMoveDuration: Theme.d(260)
+                        highlightMoveVelocity: -1
                         focus: true
-                        highlightMoveDuration: Theme.d(220)
+                        onCurrentIndexChanged: if (currentIndex >= 0) strip.selectedIndex = currentIndex
 
                         Keys.onPressed: event => {
                             switch (event.key) {
@@ -221,14 +229,6 @@ Scope {
 
                         WheelHandler {
                             onWheel: event => strip.move(strip.selectedIndex + (event.angleDelta.y < 0 ? 1 : -1))
-                        }
-
-                        Behavior on contentX {
-                            NumberAnimation {
-                                duration: Theme.d(220)
-                                easing.type: Easing.BezierSpline
-                                easing.bezierCurve: Theme.decel
-                            }
                         }
 
                         delegate: Item {
@@ -304,13 +304,12 @@ Scope {
                                 y: 10
                             }
 
-                            HoverHandler {
-                                onHoveredChanged: if (hovered) strip.selectedIndex = tile.index
-                            }
                             TapHandler {
                                 onTapped: {
-                                    strip.selectedIndex = tile.index;
-                                    strip.activate();
+                                    if (tile.active)
+                                        strip.activate();
+                                    else
+                                        strip.move(tile.index);
                                 }
                             }
                         }
