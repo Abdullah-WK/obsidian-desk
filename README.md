@@ -10,7 +10,7 @@
 
 <br><br>
 
-<img src="docs/desktop.jpg" width="880" alt="The desktop: hidden top bar, dot-grid widget column, black sand wallpaper">
+<img src="docs/hero.jpg" width="880" alt="Thunar and a foot terminal on the desk: hidden top bar, black sand wallpaper">
 
 </div>
 
@@ -45,6 +45,16 @@ Thunar, Firefox, the terminal and the boot splash are themed to match.
 <td align="center" width="50%">
 <img src="docs/session.png" alt="Session screen"><br>
 <sub><b>Session screen</b> · Super+Esc · lock, sleep, log out, reboot, power off</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<img src="docs/desktop.jpg" alt="Empty desktop"><br>
+<sub><b>Desktop</b> · widget column: clock, system, vitals, pacman updates</sub>
+</td>
+<td align="center" width="50%">
+<img src="docs/terminal.jpg" alt="Terminal"><br>
+<sub><b>Terminal</b> · foot, fish, starship, fastfetch on open</sub>
 </td>
 </tr>
 </table>
