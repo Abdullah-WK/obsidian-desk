@@ -1,12 +1,16 @@
 <div align="center">
 
-# Obsidian desk
+<img src="docs/banner.png" width="880" alt="Obsidian desk">
 
-**A near-black, zero-chroma desktop for Arch Linux · Hyprland · Caelestia**
+<br>
 
-<img src="docs/session.png" width="880" alt="Session screen: five ring glyphs on a dot field, the lock glyph focused in Arch ice">
+**A near-black, zero-chroma desktop for Arch Linux · Hyprland · Caelestia · Quickshell**
 
-<sub>Session screen. Monochrome at rest, one colour at a time when something is hot.</sub>
+<sub>Everything is grey. Colour appears only when something is hot.</sub>
+
+<br><br>
+
+<img src="docs/desktop.jpg" width="880" alt="The desktop: hidden top bar, dot-grid widget column, black sand wallpaper">
 
 </div>
 
@@ -19,12 +23,49 @@ look at all day: the hidden top bar with hover popouts, the full-screen lock, th
 screen, the launcher, the wallpaper picker, notifications and the desktop widget column.
 Thunar, Firefox, the terminal and the boot splash are themed to match.
 
+<br>
+
 <div align="center">
-<img src="docs/palette.png" width="880" alt="Palette swatches from near-black through grey to ink, plus Arch ice">
+<table>
+<tr>
+<td align="center" width="50%">
+<img src="docs/launcher.jpg" alt="Launcher"><br>
+<sub><b>Launcher</b> · tap Super · apps, <code>&gt;</code> actions, <code>=</code> calculator</sub>
+</td>
+<td align="center" width="50%">
+<img src="docs/wallpaper.jpg" alt="Wallpaper picker"><br>
+<sub><b>Wallpaper picker</b> · Super+Shift+W · a strip of sheared thumbnails</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<img src="docs/notification.jpg" alt="Notification"><br>
+<sub><b>Notifications</b> · onyx is the daemon · popups under the bar, history on the lock</sub>
+</td>
+<td align="center" width="50%">
+<img src="docs/session.png" alt="Session screen"><br>
+<sub><b>Session screen</b> · Super+Esc · lock, sleep, log out, reboot, power off</sub>
+</td>
+</tr>
+</table>
+
+<br>
+
+<img src="docs/glyphs.png" width="880" alt="The five session glyphs, the lock glyph lit in Arch ice">
+
+<sub>Ring glyphs. Monochrome at rest; on hover or focus each action lights its own accent, and reboot and power off need a hold.</sub>
+
+<br><br>
+
+<img src="docs/palette.png" width="880" alt="Palette: eight swatches from near-black to ink plus Arch ice">
+
 </div>
 
-Everything is grey. Chroma is reserved for **Arch ice** `#8fb8d8` and the five session glyph
-accents, and those only show on hover or focus.
+<br>
+
+Colours come from `~/.local/state/caelestia/scheme.json`, so `caelestia scheme set …` recolours
+the bar, lock, widgets, GTK, browser, terminal, btop and Hyprland together. Chroma is reserved
+for **Arch ice** `#8fb8d8` and the session glyph accents.
 
 ---
 
@@ -41,13 +82,6 @@ accents, and those only show on hover or focus.
 | **Widgets** | Clock, system, vitals and updates cards on the desktop. Click-through except the updates card. |
 | **Boot splash** | An Onyx Plymouth theme: near-black, Arch mark, hairline progress. |
 | **Apps** | Thunar (details view, hidden menubar, location entry), Firefox chrome, foot, fish, fzf, starship and btop all follow the live scheme. |
-
-<div align="center">
-<img src="docs/glyphs.png" width="880" alt="The five session glyphs with the lock glyph lit">
-</div>
-
-Colours come from `~/.local/state/caelestia/scheme.json`, so `caelestia scheme set …` recolours
-the bar, lock, widgets, GTK, browser, terminal, btop and Hyprland together.
 
 ## Keys
 
@@ -149,6 +183,7 @@ thunar/apply.sh                                    xfconf: details view, hidden 
 firefox/userChrome.css  firefox/apply.sh          scheme-rendered browser chrome, linked into every Firefox profile
 terminal/                                          fish user-config (fzf keys, bat, h <cmd>), fzf/starship templates, foot tweaks
 plymouth/                                          Onyx boot splash theme and installer
+docs/                                              screenshots and the palette used in this README
 ```
 
 ## Revert
@@ -175,3 +210,7 @@ companion lock is engaged. There is no watchdog: if a shell dies, run this.
   the config dir) carries a `PersistentProperties` flag across and leaves the session alone.
 - `~/.config/foot/foot.ini` is also set to alpha 1.0 on this machine. It is a dots-owned file,
   so `caelestia update` may reset it.
+
+<br>
+
+<div align="center"><sub>Wallpaper in the screenshots: black sand by Adrien Olichon on Unsplash.</sub></div>
