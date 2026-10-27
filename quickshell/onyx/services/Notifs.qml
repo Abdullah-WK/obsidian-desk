@@ -13,7 +13,34 @@ Singleton {
     id: root
 
     property var list: []          // history: {id, time, summary, body, appName, appIcon, image, urgency, actions:[{id,text}]}
-    property var popups: []        // live Notification objects currently shown
+    property var popups: []        // ids of the live popups (never the Notification objects: see setPopups)
+    property var pendingPopups: null
+
+    // Every change to `popups` goes through here and lands on the next event-loop turn, and the
+    // list holds ids, not Notification objects. Popups.qml rebuilds its Repeater on each change;
+    // a Repeater over a JS array of Notification objects segfaulted in QQmlDelegateModel while
+    // incubating delegates (crash reports 2026-10-25, 2026-10-27 x3), because the server
+    // deleteLater()s a notification the moment it is closed and the list still pointed at it.
+    function setPopups(arr: var): void {
+        pendingPopups = arr;
+        Qt.callLater(root.applyPopups);
+    }
+
+    function applyPopups(): void {
+        if (pendingPopups === null)
+            return;
+        popups = pendingPopups;
+        pendingPopups = null;
+    }
+
+    function currentPopups(): var {
+        return pendingPopups !== null ? pendingPopups : popups;
+    }
+
+    // Live Notification for an id, or null once the server has closed it.
+    function byId(id: int): var {
+        return server.trackedNotifications.values.find(n => n.id === id) ?? null;
+    }
     property real seenAt: Date.now()
     property bool dnd: false
     readonly property int unread: list.filter(n => new Date(n.time).getTime() > seenAt).length
@@ -46,7 +73,7 @@ Singleton {
     function toggleDnd(): void {
         dnd = !dnd;
         if (dnd)
-            popups = [];
+            setPopups([]);
         persist();
     }
 
@@ -54,7 +81,7 @@ Singleton {
 
     function clear(): void {
         list = [];
-        popups = [];
+        setPopups([]);
         for (const n of server.trackedNotifications.values)
             n.dismiss();
         persist();
@@ -65,13 +92,15 @@ Singleton {
         persist();
     }
 
-    function closePopup(n: Notification): void {
-        popups = popups.filter(p => p !== n);
+    function closePopup(id: int): void {
+        setPopups(currentPopups().filter(p => p !== id));
     }
 
-    function dismiss(n: Notification): void {
-        closePopup(n);
-        n.dismiss();
+    function dismiss(id: int): void {
+        closePopup(id);
+        const n = byId(id);
+        if (n)
+            n.dismiss();
     }
 
     function age(iso: string): string {
@@ -102,7 +131,7 @@ Singleton {
             n.tracked = true;
             root.list = [root.entryFor(n), ...root.list].slice(0, root.maxHistory);
             if (!root.dnd)
-                root.popups = [n, ...root.popups.filter(p => p !== n)];
+                root.setPopups([n.id, ...root.currentPopups().filter(p => p !== n.id)]);
             root.persist();
         }
     }
@@ -111,8 +140,8 @@ Singleton {
         target: server
         function onTrackedNotificationsChanged(): void {
             // drop popups whose notification was closed by the sender
-            const live = server.trackedNotifications.values;
-            root.popups = root.popups.filter(p => live.includes(p));
+            const live = server.trackedNotifications.values.map(n => n.id);
+            root.setPopups(root.currentPopups().filter(p => live.includes(p)));
         }
     }
 

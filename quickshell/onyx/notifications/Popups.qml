@@ -51,9 +51,11 @@ Scope {
 
                     Item {
                         id: slot
-                        required property Notification modelData
-                        readonly property Notification n: modelData
-                        readonly property bool critical: n.urgency === NotificationUrgency.Critical
+                        required property int modelData
+                        // null once the server closed the notification (it is deleteLater()'d then);
+                        // the deferred Notifs.popups update removes this slot a turn later.
+                        readonly property var n: Notifs.byId(modelData)
+                        readonly property bool critical: n?.urgency === NotificationUrgency.Critical
 
                         width: parent.width
                         height: card.height
@@ -97,13 +99,13 @@ Scope {
                                 easing.bezierCurve: Theme.accel
                             }
                             ScriptAction {
-                                script: Notifs.closePopup(slot.n)
+                                script: Notifs.closePopup(slot.modelData)
                             }
                         }
 
                         Timer {
                             id: expiry
-                            interval: slot.n.expireTimeout > 0 ? slot.n.expireTimeout : Config.notifTimeoutMs
+                            interval: (slot.n?.expireTimeout ?? 0) > 0 ? slot.n.expireTimeout : Config.notifTimeoutMs
                             running: !slot.critical && !hover.hovered
                             onTriggered: slot.leave()
                         }
@@ -124,7 +126,7 @@ Scope {
                                 width: 2
                                 height: parent.height - 20
                                 radius: 1
-                                color: slot.critical ? Scheme.error : slot.n.urgency === NotificationUrgency.Low ? Scheme.outlineVariant : Scheme.primary
+                                color: slot.critical ? Scheme.error : slot.n?.urgency === NotificationUrgency.Low ? Scheme.outlineVariant : Scheme.primary
                             }
 
                             Column {
@@ -144,21 +146,21 @@ Scope {
                                         anchors.verticalCenter: parent.verticalCenter
                                         Loader {
                                             anchors.fill: parent
-                                            active: slot.n.image !== "" || slot.n.appIcon !== ""
+                                            active: !!slot.n && (slot.n.image !== "" || slot.n.appIcon !== "")
                                             sourceComponent: IconImage {
-                                                source: slot.n.image !== "" ? slot.n.image : Quickshell.iconPath(slot.n.appIcon, "notifications")
+                                                source: !slot.n ? "" : slot.n.image !== "" ? slot.n.image : Quickshell.iconPath(slot.n.appIcon, "notifications")
                                             }
                                         }
                                         Icon {
                                             anchors.centerIn: parent
-                                            visible: slot.n.image === "" && slot.n.appIcon === ""
+                                            visible: !slot.n || (slot.n.image === "" && slot.n.appIcon === "")
                                             text: "notifications"
                                             size: 18
                                             color: Scheme.fgSurfaceVariant
                                         }
                                     }
                                     Ink {
-                                        text: slot.n.summary || slot.n.appName
+                                        text: slot.n?.summary || slot.n?.appName || ""
                                         size: 13
                                         font.weight: 500
                                         width: parent.width - 30 - meta.implicitWidth - 10
@@ -167,7 +169,7 @@ Scope {
                                     Ink {
                                         id: meta
                                         mono: true
-                                        text: (slot.n.appName || "").toLowerCase()
+                                        text: (slot.n?.appName || "").toLowerCase()
                                         size: 10
                                         color: Scheme.outline
                                         anchors.verticalCenter: parent.verticalCenter
@@ -176,7 +178,7 @@ Scope {
 
                                 Ink {
                                     visible: text !== ""
-                                    text: slot.n.body.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()
+                                    text: (slot.n?.body ?? "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()
                                     size: 12
                                     color: Scheme.fgSurfaceVariant
                                     width: parent.width
@@ -187,10 +189,10 @@ Scope {
                                 }
 
                                 Row {
-                                    visible: slot.n.actions.length > 0
+                                    visible: (slot.n?.actions.length ?? 0) > 0
                                     spacing: 6
                                     Repeater {
-                                        model: slot.n.actions
+                                        model: slot.n ? slot.n.actions : []
                                         Rectangle {
                                             id: chip
                                             required property NotificationAction modelData
@@ -212,7 +214,8 @@ Scope {
                                             }
                                             TapHandler {
                                                 onTapped: {
-                                                    chip.modelData.invoke();
+                                                    if (slot.n)
+                                                        chip.modelData.invoke();
                                                     slot.leave();
                                                 }
                                             }
@@ -240,7 +243,7 @@ Scope {
                                 }
                                 TapHandler {
                                     onTapped: {
-                                        Notifs.dismiss(slot.n);
+                                        Notifs.dismiss(slot.modelData);
                                     }
                                 }
                             }
@@ -250,7 +253,7 @@ Scope {
                             }
                             TapHandler {
                                 onTapped: {
-                                    const def = slot.n.actions.find(a => a.identifier === "default");
+                                    const def = slot.n?.actions.find(a => a.identifier === "default");
                                     if (def)
                                         def.invoke();
                                     slot.leave();
