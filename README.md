@@ -6,8 +6,6 @@ Quickshell config (`qs -c onyx`) adds the hidden top status bar with hover popou
 full-screen lock with hover glyphs, and the desktop widget column. Thunar is restyled through
 a Caelestia user template. The only chromatic colour is "Arch ice" `#8fb8d8`.
 
-Built from `OBSIDIAN_SPEC.md` (design page: https://claude.ai/artifact/3i4123QPPfKacBYBU9gkjC).
-
 ## Layout
 
 ```
