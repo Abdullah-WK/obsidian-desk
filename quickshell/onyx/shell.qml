@@ -25,9 +25,22 @@ ShellRoot {
     readonly property bool lockFirst: Quickshell.env("ONYX_LOCK_ON_START") === "1"
     property bool restReady: !lockFirst
 
+    // Only the very first load of this process should lock; a hot reload (any file edit under the
+    // config dir) must not. `booted` is carried over from the previous generation and restored
+    // before `loaded` fires, so it is false exactly once per process.
+    PersistentProperties {
+        id: boot
+        reloadableId: "onyxBoot"
+        property bool booted: false
+        onLoaded: {
+            if (!booted && root.lockFirst)
+                sessionLock.engage();
+            booted = true;
+        }
+    }
+
     Lock {
         id: sessionLock
-        Component.onCompleted: if (root.lockFirst) engage()
     }
 
     Timer {

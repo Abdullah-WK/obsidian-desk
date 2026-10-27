@@ -1,7 +1,7 @@
 pragma ComponentBehavior: Bound
 // Full-screen session screen in the lock's language: dot field, vignette, a row of ring glyphs
 // (lock · sleep · log out · reboot · power off). Super+Esc / Ctrl+Alt+Del toggle it; Esc closes.
-// Keys: ←/→ h/l move, Enter/Space activates (hold on reboot/off), letters l s o r p.
+// Keys: ←/→ Tab/Shift+Tab move, Enter/Space activates (hold on reboot/off), letters l s o r p.
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -112,14 +112,16 @@ Scope {
                         root.hide();
                         break;
                     case Qt.Key_Left:
-                    case Qt.Key_H:
                     case Qt.Key_Backtab:
                         focusStep(-1);
                         break;
                     case Qt.Key_Right:
-                    case Qt.Key_L:
                     case Qt.Key_Tab:
                         focusStep(1);
+                        break;
+                    case Qt.Key_L:
+                        gLock.forceActiveFocus();
+                        gLock.startHold();
                         break;
                     case Qt.Key_S:
                         gSleep.forceActiveFocus();
@@ -143,6 +145,8 @@ Scope {
                     event.accepted = true;
                 }
                 Keys.onReleased: event => {
+                    if (event.isAutoRepeat)
+                        return;
                     if (event.key === Qt.Key_R)
                         gReboot.cancelHold();
                     else if (event.key === Qt.Key_P)
@@ -220,6 +224,7 @@ Scope {
                             required property string label
                             required property string hint
                             property bool hold: false
+                            property color accent: Scheme.archIce
                             property var action: () => {}
                             readonly property alias glyph: g
                             spacing: surface.px(18)
@@ -229,6 +234,7 @@ Scope {
                                 icon: entry.icon
                                 label: entry.hint
                                 hold: entry.hold
+                                accent: entry.accent
                                 size: surface.px(96)
                                 iconSize: surface.px(40)
                                 scaleF: surface.s
@@ -256,6 +262,7 @@ Scope {
                             icon: "lock"
                             label: "lock"
                             hint: "L"
+                            accent: Scheme.glyphLock
                             action: () => {
                                 root.hide();
                                 root.lock.engage();
@@ -266,6 +273,7 @@ Scope {
                             icon: "bedtime"
                             label: "sleep"
                             hint: "S"
+                            accent: Scheme.glyphSleep
                             action: () => root.run(["systemctl", "suspend"])
                         }
                         Entry {
@@ -273,6 +281,7 @@ Scope {
                             icon: "logout"
                             label: "log out"
                             hint: "O"
+                            accent: Scheme.glyphLogout
                             action: () => root.run(Config.logoutCommand)
                         }
                         Entry {
@@ -280,6 +289,7 @@ Scope {
                             icon: "cached"
                             label: "reboot"
                             hint: "R · hold"
+                            accent: Scheme.glyphReboot
                             hold: true
                             action: () => root.run(["systemctl", "reboot"])
                         }
@@ -288,6 +298,7 @@ Scope {
                             icon: "power_settings_new"
                             label: "power off"
                             hint: "P · hold"
+                            accent: Scheme.glyphPower
                             hold: true
                             action: () => root.run(["systemctl", "poweroff"])
                         }

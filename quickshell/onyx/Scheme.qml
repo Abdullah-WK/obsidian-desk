@@ -70,6 +70,12 @@ Singleton {
     readonly property color crimson: "#dc143c"
     // the one chromatic token of the Obsidian scheme; under any other scheme it follows primary
     readonly property color archIce: onyx ? "#8fb8d8" : primary
+    // session / lock action accents: deliberately chromatic, never schemed
+    readonly property color glyphLock: "#7cc4ff"
+    readonly property color glyphSleep: "#b48cff"
+    readonly property color glyphLogout: "#ffb454"
+    readonly property color glyphReboot: "#ff8a5b"
+    readonly property color glyphPower: "#ff5c6c"
 
     function alpha(col: color, a: real): color {
         return Qt.rgba(col.r, col.g, col.b, a);

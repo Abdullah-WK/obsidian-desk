@@ -918,6 +918,7 @@ FocusScope {
                 Glyph {
                     icon: "bedtime"
                     label: "sleep"
+                    accent: Scheme.glyphSleep
                     size: root.px(56)
                     iconSize: root.px(24)
                     scaleF: root.s
@@ -927,6 +928,7 @@ FocusScope {
                 Glyph {
                     icon: "logout"
                     label: "log out"
+                    accent: Scheme.glyphLogout
                     size: root.px(56)
                     iconSize: root.px(24)
                     scaleF: root.s
@@ -936,6 +938,7 @@ FocusScope {
                 Glyph {
                     icon: "cached"
                     label: "reboot"
+                    accent: Scheme.glyphReboot
                     hold: true
                     size: root.px(56)
                     iconSize: root.px(24)
@@ -946,6 +949,7 @@ FocusScope {
                 Glyph {
                     icon: "power_settings_new"
                     label: "power off"
+                    accent: Scheme.glyphPower
                     hold: true
                     size: root.px(56)
                     iconSize: root.px(24)
