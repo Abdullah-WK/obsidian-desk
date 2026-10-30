@@ -51,6 +51,23 @@ hl.animation({ leaf = "layersOut",   enabled = true, speed = 2,   bezier = "obsi
 -- Unfocused windows recede slightly (redraws only on focus change)
 hl.config({ decoration = { dim_inactive = true, dim_strength = 0.08 } })
 
+-- Window wobble (Hyprland 0.57+): spring mesh deformation while a window is moved or resized.
+-- Kept restrained: lower impulse than the default 0.2, default spring (stiffness 200 / damping 12)
+-- so it settles in roughly the same 200–250 ms as the rest of the motion. Opt a window out with
+-- the `no_wobble` window rule. Disable here or with: hyprctl keyword decoration:wobble:enabled false
+hl.config({
+    decoration = {
+        wobble = {
+            enabled   = true,
+            intensity = 0.15,
+            stiffness = 200,
+            damping   = 12,
+            mass      = 1,
+            mesh      = 12,
+        },
+    },
+})
+
 -- Diagnostics (2026-10-26, after an unexplained "Hyprland died"): keep Hyprland's own log on
 -- (default off) and mirror it + SDDM's session log to ~/.local/state/hyprland/ (last 6 sessions),
 -- since both originals vanish at logout. `hyprland-current.log` / `session-current.log` point at
